@@ -1,65 +1,42 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import layout from '../styles/main-layout.module.css'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+    <div className={layout.pageWrap}>
+    <header className={layout.pageHeader}>
+      Header
+    </header>
+    <nav className={layout.pageNav}>
+      Nav
+    </nav>
+    <main className={layout.pageMain}>
+      <article>
+        <details>
+          <summary>Article</summary>
+          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos laborum cumque incidunt, enim ipsa dicta? Porro illo doloribus, consectetur eum exercitationem sit ipsam, est nesciunt maxime, eius animi dolor? Harum.</p>
+          <p>Commodi culpa deserunt dolor sed, ipsam tempore ullam architecto fuga voluptas, quis veniam. Vitae veniam, odit adipisci, quas similique debitis excepturi quisquam minima facere temporibus, porro optio perferendis iusto fuga.</p>
+          <p>Illo numquam, sapiente neque repellendus facere amet doloribus asperiores quia eum? Sunt vero amet neque vel? Tempora, nulla voluptatum amet autem culpa magnam debitis! Dolores esse quam amet nobis ut.</p>
+          <p>Sunt excepturi in nostrum, fugiat veritatis ab sit sequi nemo aperiam deserunt temporibus, dolorem ex adipisci autem. Quasi, iure fugiat! Nulla amet doloribus velit nam tempora, soluta consequatur doloremque omnis?</p>
+          <p>Officia ea repellat ad, sapiente eligendi modi magni quos temporibus totam culpa corporis, dignissimos quibusdam mollitia dolore eaque suscipit soluta beatae ipsam! Aperiam doloremque vero soluta pariatur possimus. Cupiditate, fuga.</p>
+          <p>Beatae deserunt veritatis magni quis quae enim ad est dignissimos iste, quidem, dolores temporibus asperiores natus inventore, nobis eius facere adipisci doloremque eligendi autem magnam excepturi? Inventore, iusto soluta. Maiores.</p>
+          <p>Enim facilis aspernatur, maiores unde at inventore temporibus minima possimus eveniet? Cum alias, asperiores quibusdam doloribus, vel ullam qui in dicta recusandae eaque atque dolor perspiciatis tenetur, fugit vero reprehenderit.</p>
+          <p>Reiciendis, deleniti eius nostrum fugit commodi quasi esse molestias non voluptates, corrupti excepturi voluptatibus, consequatur ipsa animi placeat quia corporis ut itaque quos pariatur inventore. Quasi incidunt sapiente quisquam soluta?</p>
+          <p>Laboriosam eos atque possimus assumenda quia voluptatem saepe optio, eveniet laborum. Sit esse doloremque laboriosam? Ullam inventore ut facilis accusamus, ipsum, autem labore incidunt consequatur eos dolorem, sit aperiam odit.</p>
+          <p>Consequuntur pariatur illum doloremque, necessitatibus praesentium quis cumque officiis non commodi reprehenderit quaerat velit saepe impedit vitae dolores, veritatis reiciendis ducimus nobis totam, itaque porro temporibus excepturi error iste! Sunt.</p>
+          <p>Commodi culpa deserunt dolor sed, ipsam tempore ullam architecto fuga voluptas, quis veniam. Vitae veniam, odit adipisci, quas similique debitis excepturi quisquam minima facere temporibus, porro optio perferendis iusto fuga.</p>
+          <p>Illo numquam, sapiente neque repellendus facere amet doloribus asperiores quia eum? Sunt vero amet neque vel? Tempora, nulla voluptatum amet autem culpa magnam debitis! Dolores esse quam amet nobis ut.</p>
+          <p>Sunt excepturi in nostrum, fugiat veritatis ab sit sequi nemo aperiam deserunt temporibus, dolorem ex adipisci autem. Quasi, iure fugiat! Nulla amet doloribus velit nam tempora, soluta consequatur doloremque omnis?</p>
+          <p>Officia ea repellat ad, sapiente eligendi modi magni quos temporibus totam culpa corporis, dignissimos quibusdam mollitia dolore eaque suscipit soluta beatae ipsam! Aperiam doloremque vero soluta pariatur possimus. Cupiditate, fuga.</p>
+        </details>
+      </article>
+    </main>
+    <aside className={layout.pageSidebar}>
+      Aside
+    </aside>
+    <footer className={layout.pageFooter}>
+      Footer
+    </footer>
+  </div>
   )
 }
