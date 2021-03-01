@@ -1,11 +1,10 @@
-import Head from 'next/head'
 import layout from '../styles/main-layout.module.css'
 
 export default function Home() {
   return (
     <div className={layout.pageWrap}>
     <header className={layout.pageHeader}>
-      Header
+      Posh Centre
     </header>
     <nav className={layout.pageNav}>
       Nav
