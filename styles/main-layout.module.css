@@ -1,12 +1,10 @@
 .pageWrap {
   background: white;
   height: calc(100vh - 10px);
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
-          box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: minmax(10px, 1fr) minmax(10px, 3fr);
-      grid-template-columns: minmax(10px, 1fr) minmax(10px, 3fr);
+  -ms-grid-columns: minmax(10px, 1fr) minmax(10px, 4fr);
+      grid-template-columns: minmax(10px, 1fr) minmax(10px, 4fr);
   -ms-grid-rows: min-content min-content 1fr min-content;
       grid-template-rows: -webkit-min-content -webkit-min-content 1fr -webkit-min-content;
       grid-template-rows: min-content min-content 1fr min-content;
@@ -33,7 +31,6 @@
 
 .pageHeader {
   grid-column: 1 / -1;
-  background: #ffcdd2;
 }
 
 .pageSidebar {
@@ -43,24 +40,20 @@
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   grid-row: 2 / 4;
-  background: #e1bee7;
 }
 
 .pageNav {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2 / 3;
-  background: #bbdefb;
 }
 
 .pageMain {
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-column: 2 / 3;
-  background: #dcedc8;
 }
 
 .pageFooter {
   grid-column: 1 / -1;
-  background: #ffecb3;
 }
