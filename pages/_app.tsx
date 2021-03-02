@@ -4,9 +4,14 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../lib/theme';
+import { UserContext } from '../lib/contexts';
+import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useUserData } from '../lib/hooks';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const userData = useUserData();
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -25,7 +30,9 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <UserContext.Provider value={userData}>
         <Component {...pageProps} />
+        </UserContext.Provider>
       </ThemeProvider>
     </React.Fragment>
   );
