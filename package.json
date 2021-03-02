@@ -16,7 +16,8 @@
     "next": "^10.0.7",
     "next-firebase-auth": "^0.13.0-alpha.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-firebaseui": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

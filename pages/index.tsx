@@ -4,6 +4,8 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from 'next-firebase-auth'
+import React from 'react'
+import Link from 'next/link'
 
 function  Home() {
   const AuthUser = useAuthUser()
@@ -14,6 +16,19 @@ function  Home() {
     </header>
     <nav className={layout.pageNav}>
     <p>Your email is {AuthUser.email ? AuthUser.email : "unknown"}.</p>
+    {AuthUser.email ?  <button
+          type="button"
+          onClick={() => {
+            AuthUser.signOut()
+          }}
+        >Sign out</button> :
+        <Link href="/auth">
+          <a>
+            <button type="button" >
+              Sign in
+            </button>
+          </a>
+        </Link> }
     </nav>
     <main className={layout.pageMain}>
       <article>
