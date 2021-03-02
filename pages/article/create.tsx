@@ -8,8 +8,8 @@ import React, { useRef } from "react";
 import AuthButton from "../../components/AuthButton";
 import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
-import EditorJsContainer from "react-editor-js";
 import CreateArticleForm from "../../components/CreateArticleForm";
+import { Layout } from "../../components/Layout";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false,
@@ -26,19 +26,11 @@ function Home() {
   };
 
   return (
-    <div className={layout.pageWrap}>
-      <header className={layout.pageHeader}>Posh Centre</header>
-      <nav className={layout.pageNav}>
-        <AuthButton AuthUser={AuthUser} />
-      </nav>
-      <main className={layout.pageMain}>
+    <Layout AuthUser={AuthUser}>
         <CreateArticleForm/>
         <button onClick={handleSave}>Create</button>
         <Editor editorInstance={editorInstance} />
-      </main>
-      <aside className={layout.pageSidebar}>Aside</aside>
-      <footer className={layout.pageFooter}>Footer</footer>
-    </div>
+    </Layout>
   );
 }
 export const getServerSideProps = withAuthUserTokenSSR()();

@@ -7,25 +7,18 @@ import {
 import React from "react";
 import Link from "next/link";
 import AuthButton from "../components/AuthButton";
+import { Layout } from "../components/Layout";
 
 function Home() {
   const AuthUser = useAuthUser();
   return (
-    <div className={layout.pageWrap}>
-      <header className={layout.pageHeader}>Posh Centre</header>
-      <nav className={layout.pageNav}>
-        <AuthButton AuthUser={AuthUser} />
-      </nav>
-      <main className={layout.pageMain}>
-        <Link href="/article/create">
-          <a>
-            <button type="button">New Article</button>
-          </a>
-        </Link>
-      </main>
-      <aside className={layout.pageSidebar}>Aside</aside>
-      <footer className={layout.pageFooter}>Footer</footer>
-    </div>
+    <Layout AuthUser={AuthUser}>
+      <Link href="/article/create">
+        <a>
+          <button type="button">New Article</button>
+        </a>
+      </Link>
+    </Layout>
   );
 }
 export const getServerSideProps = withAuthUserTokenSSR()();
