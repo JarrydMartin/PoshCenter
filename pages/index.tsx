@@ -1,13 +1,19 @@
 import layout from '../styles/main-layout.module.css'
+import {
+  useAuthUser,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from 'next-firebase-auth'
 
-export default function Home() {
+function  Home() {
+  const AuthUser = useAuthUser()
   return (
     <div className={layout.pageWrap}>
     <header className={layout.pageHeader}>
       Posh Centre
     </header>
     <nav className={layout.pageNav}>
-      Nav
+    <p>Your email is {AuthUser.email ? AuthUser.email : "unknown"}.</p>
     </nav>
     <main className={layout.pageMain}>
       <article>
@@ -39,3 +45,6 @@ export default function Home() {
   </div>
   )
 }
+export const getServerSideProps = withAuthUserTokenSSR()()
+
+export default withAuthUser() (Home);

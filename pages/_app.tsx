@@ -4,6 +4,9 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../lib/theme';
+import initAuth from '../lib/initAuth';
+
+initAuth();
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

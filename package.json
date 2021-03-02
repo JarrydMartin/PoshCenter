@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@material-ui/core": "latest",
+    "@react-firebase/auth": "^0.2.10",
     "clsx": "latest",
     "firebase": "^8.2.9",
     "firebase-admin": "^9.5.0",
