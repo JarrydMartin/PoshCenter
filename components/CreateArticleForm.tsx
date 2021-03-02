@@ -1,11 +1,24 @@
-import React from 'react'
+import { TextField } from "@material-ui/core";
 
-const CreateArticleForm = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+import React, { Dispatch, SetStateAction } from "react";
+import { ArticleFormModel } from "../lib/models";
 
-export default CreateArticleForm
+const CreateArticleForm = ({
+  fields,
+  setFields,
+}: {
+  fields: ArticleFormModel;
+  setFields: React.Dispatch<React.SetStateAction<ArticleFormModel>>;
+}) => {
+  return (
+    <form>
+      <TextField
+        placeholder="Title"
+        value={fields.Title}
+        onChange={(e) => setFields({ ...fields, Title: e.target.value })}
+      />
+    </form>
+  );
+};
+
+export default CreateArticleForm;
