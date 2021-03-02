@@ -29,14 +29,11 @@
     "@react-firebase/auth": "^0.2.10",
     "clsx": "latest",
     "firebase": "^8.2.9",
-    "firebase-admin": "^9.5.0",
-    "formik": "^2.2.6",
     "next": "^10.0.7",
-    "next-firebase-auth": "^0.13.0-alpha.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-editor-js": "latest",
-    "react-firebaseui": "^4.1.0"
+    "react-firebase-hooks": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",

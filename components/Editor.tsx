@@ -1,5 +1,4 @@
 import React, { createRef, useRef } from "react";
-import EditorJsContainer from "react-editor-js";
 import EditorJs from "react-editor-js";
 import EditorJS from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../lib/constants";
