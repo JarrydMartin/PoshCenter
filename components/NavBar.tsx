@@ -1,9 +1,9 @@
 import { Avatar, Button, Link, makeStyles } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { Dispatch, useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 
-const NavBar = () => {
+const NavBar = ({editMode, setEditMode}:{editMode:boolean, setEditMode?:Dispatch<React.SetStateAction<boolean>>}) => {
   const classes = useStyles();
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
@@ -31,6 +31,15 @@ const NavBar = () => {
     );
   };
 
+
+  const EditArticleButton =() =>{
+      return (
+        <Button color="primary" type="button" onClick={()=> setEditMode(!editMode)}>
+          { editMode ?  "Save Article":"Edit Article" }
+        </Button>
+    );
+  }
+
   const SigninButton = () => {
     return (
       <Button className="btn-google" onClick={signInWithGoogle}>
@@ -43,7 +52,7 @@ const NavBar = () => {
   return (
     <div className={classes.root}>
       
-      {user ? <><NewArticleButton /><NavProfile /></> : <SigninButton />}
+      {user ? <><NewArticleButton /><EditArticleButton/><NavProfile /></> : <SigninButton />}
     </div>
   );
 };

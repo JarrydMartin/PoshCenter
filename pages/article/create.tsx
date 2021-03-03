@@ -42,7 +42,7 @@ function Home() {
       <Button type="submit" onClick={createArticle}>
         Create
       </Button>
-      <Editor editorInstance={editorInstance} />
+      <Editor editorInstance={editorInstance} data={null}/>
     </Layout>
   );
 }
