@@ -14,8 +14,8 @@ const CreateArticleForm = ({
     <form>
       <TextField
         placeholder="Title"
-        value={fields.Title}
-        onChange={(e) => setFields({ ...fields, Title: e.target.value })}
+        value={fields.title}
+        onChange={(e) => setFields({ ...fields, title: e.target.value })}
       />
     </form>
   );

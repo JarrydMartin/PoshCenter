@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import CreateArticleForm from "../../components/CreateArticleForm";
 import { Layout } from "../../components/Layout";
-import { ArticleFormModel } from "../../lib/models";
+import { ArticleFormModel, ArticleModel } from "../../lib/models";
 import { Button, makeStyles } from "@material-ui/core";
 import { auth, firestore } from "../../lib/firebase";
 import kebabCase from 'lodash.kebabcase';
@@ -18,20 +18,20 @@ function Home() {
   const { user } = useContext(UserContext);
   let editorInstance = useRef<EditorJS>(null);
   let formRef = useRef(null);
-  const [fields, setFields] = useState<ArticleFormModel>({ Title: "" });
+  const [fields, setFields] = useState<ArticleFormModel>({ title: "" });
 
   const createArticle = async (e) => {
     e.preventDefault();
 
-    const slug = encodeURI(kebabCase(fields.Title));
+    const slug = encodeURI(kebabCase(fields.title));
     const editorData = await editorInstance.current.save();
     const ref = firestore.collection('users').doc(auth.currentUser.uid).collection('articles').doc(slug);
     
-    const data = {
+    const data:ArticleModel = {
       ...editorData,
       ...fields,
       slug: slug,
-      AuthorUri: auth.currentUser.uid
+      authorUri: auth.currentUser.uid
     }
     await ref.set(data);
   };

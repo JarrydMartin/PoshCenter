@@ -13,7 +13,9 @@ const NavBar = () => {
     return (
       <>
         <p>{user?.displayName}</p>
-        <Avatar alt={user?.displayName} src={user?.photoURL} />
+        <Link href={`/user/${user?.uid}`}>
+          <Avatar alt={user?.displayName} src={user?.photoURL} />
+        </Link>
         <Button onClick={() => auth.signOut()}>Sign Out</Button>
       </>
     );
@@ -22,11 +24,9 @@ const NavBar = () => {
   const NewArticleButton = () => {
     return (
       <Link href="/article/create">
-        <a>
           <Button color="primary" type="button">
             New Article
           </Button>
-        </a>
       </Link>
     );
   };

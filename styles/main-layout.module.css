@@ -57,3 +57,5 @@
 .pageFooter {
   grid-column: 1 / -1;
 }
+
+list-style-type: none;
