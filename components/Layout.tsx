@@ -3,6 +3,7 @@ import React from "react";
 import AuthButton from "./AuthButton";
 import NavBar from "./NavBar";
 
+
 export function Layout({ children }: { children: any }) {
   return (
     <div className={layout.pageWrap}>
