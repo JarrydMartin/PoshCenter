@@ -1,9 +1,23 @@
 import { Avatar, Button, Link, makeStyles } from "@material-ui/core";
-import React, { Dispatch, useContext } from "react";
+import React, { Dispatch, MutableRefObject, useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
+import { ArticleModel } from "../lib/models";
+import EditorJS from "@editorjs/editorjs";
 
-const NavBar = ({editMode, setEditMode}:{editMode:boolean, setEditMode?:Dispatch<React.SetStateAction<boolean>>}) => {
+const NavBar = ({
+  editMode,
+  setEditMode,
+  article,
+  setArticle,
+  editorRef
+}: {
+  editMode: boolean;
+  setEditMode?: Dispatch<React.SetStateAction<boolean>>;
+  article?: ArticleModel;
+  setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
+  editorRef?:MutableRefObject<EditorJS>;
+}) => {
   const classes = useStyles();
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
@@ -24,21 +38,38 @@ const NavBar = ({editMode, setEditMode}:{editMode:boolean, setEditMode?:Dispatch
   const NewArticleButton = () => {
     return (
       <Link href="/article/create">
-          <Button color="primary" type="button">
-            New Article
-          </Button>
+        <Button color="primary" type="button">
+          New Article
+        </Button>
       </Link>
     );
   };
 
-
-  const EditArticleButton =() =>{
-      return (
-        <Button color="primary" type="button" onClick={()=> setEditMode(!editMode)}>
-          { editMode ?  "Save Article":"Edit Article" }
-        </Button>
-    );
+  const handleEditClick = async () => {
+    if(editMode){
+      const editorData = await editorRef.current.save();
+      setArticle({...article, ...editorData})
+    }
+    setEditMode(!editMode)
   }
+
+  const EditArticleButton = () => {
+    if(editorRef){
+    return (
+      <Button
+        color="primary"
+        type="button"
+        onClick={handleEditClick}
+      >
+        {editMode ? "Save Article" : "Edit Article"}
+      </Button>
+    );
+  } else {
+    return (
+      <></>
+    )
+  }
+  };
 
   const SigninButton = () => {
     return (
@@ -51,8 +82,15 @@ const NavBar = ({editMode, setEditMode}:{editMode:boolean, setEditMode?:Dispatch
   const { user } = useContext(UserContext);
   return (
     <div className={classes.root}>
-      
-      {user ? <><NewArticleButton /><EditArticleButton/><NavProfile /></> : <SigninButton />}
+      {user ? (
+        <>
+          <NewArticleButton />
+          <EditArticleButton />
+          <NavProfile />
+        </>
+      ) : (
+        <SigninButton />
+      )}
     </div>
   );
 };

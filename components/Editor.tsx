@@ -1,4 +1,4 @@
-import React, { createRef, useRef } from "react";
+import React, { createRef, Dispatch, useRef } from "react";
 import EditorJs from "react-editor-js";
 import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../lib/constants";
@@ -7,12 +7,14 @@ import { ArticleModel } from "../lib/models";
 const Editor = ({
   editorInstance,
   data,
-  isReadOnly
+  isReadOnly,
 }: {
-  editorInstance?: React.MutableRefObject<EditorJS>,
-  data:ArticleModel,
-  isReadOnly?:boolean
+  editorInstance: React.MutableRefObject<EditorJS>;
+  data: ArticleModel;
+  isReadOnly?: boolean;
+  
 }) => {
+
   return (
     <EditorJs
       tools={EDITOR_JS_TOOLS}

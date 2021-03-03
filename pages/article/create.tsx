@@ -8,6 +8,8 @@ import { Button, makeStyles } from "@material-ui/core";
 import { auth, firestore } from "../../lib/firebase";
 import kebabCase from 'lodash.kebabcase';
 import { UserContext } from "../../lib/contexts";
+import Link from "next/link";
+import { useRouter } from 'next/router'
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false,
@@ -19,6 +21,7 @@ function Home() {
   let editorInstance = useRef<EditorJS>(null);
   let formRef = useRef(null);
   const [fields, setFields] = useState<ArticleFormModel>({ title: "" });
+  const router = useRouter()
 
   const createArticle = async (e) => {
     e.preventDefault();
@@ -34,14 +37,17 @@ function Home() {
       authorUri: auth.currentUser.uid
     }
     await ref.set(data);
+    router.push(`/user/${auth.currentUser.uid}/article/${slug}`);//eg.history.push('/login');
   };
 
   return (
     <Layout>
       <CreateArticleForm fields={fields} setFields={setFields} />
+      
       <Button type="submit" onClick={createArticle}>
         Create
       </Button>
+  
       <Editor editorInstance={editorInstance} data={null}/>
     </Layout>
   );
