@@ -5,23 +5,21 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 // Custom hook to read  auth record and user profile doc
 export function useUserData() {
   const [user] = useAuthState(auth);
-//   const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(null);
 
-//   useEffect(() => {
-//     // turn off realtime subscription
-//     let unsubscribe;
+  // useEffect(() => {
+  //   // turn off realtime subscription
+  //   let unsubscribe;
 
-//     if (user) {
-//       const ref = firestore.collection('users').doc(user.uid);
-//       unsubscribe = ref.onSnapshot((doc) => {
-//         setUsername(doc.data()?.username);
-//       });
-//     } else {
-//       setUsername(null);
-//     }
+  //   if (user) {
+  //     const ref = firestore.collection('users').doc(user.uid);
+  //     unsubscribe = ref.onSnapshot();
+  //   } else {
+  //     setUsername(null);
+  //   }
 
-//     return unsubscribe;
-//   }, [user]);
+  //   return unsubscribe;
+  // }, [user]);
 
   return { user };
 }
