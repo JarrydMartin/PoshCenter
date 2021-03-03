@@ -16,6 +16,6 @@ export interface ArticleModel{
 export interface ArticleType{
     articleId: string,
     name: string,
-    homePage: string,
+    slug: string,
     order: number
 }

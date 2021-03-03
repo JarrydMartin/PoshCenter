@@ -1,5 +1,5 @@
 import { firestore } from "./firebase";
-import { ArticleModel } from "./models";
+import { ArticleModel, ArticleType } from "./models";
 
 export async function GetArticle(UserId: string, articleSlug: string) {
   const articleRef = firestore
@@ -10,6 +10,18 @@ export async function GetArticle(UserId: string, articleSlug: string) {
   const doc = await articleRef.get();
   return doc.data();
 }
+export async function GetUserArticles(UserId: string) {
+
+  let data:any[]= [];
+  const userRef = firestore.collection('users').doc(UserId).collection("articles");
+  const snapshot = await userRef.get();
+  snapshot.forEach(doc => {
+    data.push(doc.data());
+  });
+  
+  return data
+}
+
 
 export async function UpdateArticle(
   UserId: string,
@@ -35,4 +47,14 @@ export async function AddArticle(
     .collection("articles")
     .doc(articleSlug);
   await ref.set(article);
+}
+
+export async function AddArticleType(
+  articleType: ArticleType
+) {
+  const ref = firestore
+    .collection("articleTypes")
+    .doc(articleType.slug)
+
+  await ref.set(articleType);
 }

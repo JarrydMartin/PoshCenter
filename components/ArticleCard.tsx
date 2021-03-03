@@ -5,7 +5,8 @@ import { ArticleModel } from '../lib/models';
 
 const useStyles = makeStyles({
     root: {
-      maxWidth: 275,
+      maxWidth: 200,
+      minWidth: 200,
       margin:"16px"
     },
     bullet: {
@@ -35,7 +36,7 @@ const ArticleCard = ({article}:{article:ArticleModel}) => {
           </Typography>
         </CardContent>
         <CardActions className={classes.action}>
-        <Link href={`/user/${article.authorUri}/article/${article.slug}`}>
+        <Link href={`/user/${article.authorId}/article/${article.slug}`}>
           <Button>Open</Button>
           </Link>
         </CardActions>

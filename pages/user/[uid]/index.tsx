@@ -4,29 +4,38 @@ import { firestore } from '../../../lib/firebase';
 import { ArticleFormModel, ArticleModel } from '../../../lib/models';
 import ArticleCard from '../../../components/ArticleCard';
 import { Layout } from '../../../components/Layout';
+import { GetUserArticles } from '../../../lib/dataAccess';
+import { makeStyles } from '@material-ui/core';
 
 export async function getServerSideProps({query}) {
     const {uid} = query;
-    const articlesSnapShot = await firestore.collection('users').doc(uid).collection('articles').get();
-    const articlesJson = articlesSnapShot.docs.map(doc => JSON.stringify(doc.data(),null, 2));
+    const articles = await GetUserArticles(uid)
     return{
-        props:{articlesJson}
+        props:{articles}
     }
     
 }
 
-const UserIndex = ({articlesJson}) => {
-
-    const articles:ArticleModel[] = articlesJson.map(a => JSON.parse(a))
-    const articleList = articles.map(a => <li style={{listStyleType: "none"}} ><ArticleCard article={a}/></li>)
+const UserIndex = ({articles}:{articles:ArticleModel[]}) => {
+    const classes = useStyles();
+    const articleList = articles.map(a => <ArticleCard article={a}/>)
     
     return (
         <Layout>
-            <ul>
+            <div className={classes.root}>
+            
                 {articleList}
-            </ul>
+                </div>
+            
         </Layout>
     )
 }
+
+const useStyles = makeStyles({
+    root: {
+      display: "flex",
+      alignItems: "center",
+    },
+  });
 
 export default UserIndex
