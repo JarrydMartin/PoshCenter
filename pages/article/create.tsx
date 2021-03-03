@@ -1,15 +1,14 @@
-import React, { useContext, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import CreateArticleForm from "../../components/CreateArticleForm";
 import { Layout } from "../../components/Layout";
 import { ArticleFormModel, ArticleModel } from "../../lib/models";
 import { Button, makeStyles } from "@material-ui/core";
-import { auth, firestore } from "../../lib/firebase";
+import { auth } from "../../lib/firebase";
 import kebabCase from 'lodash.kebabcase';
-import { UserContext } from "../../lib/contexts";
-import Link from "next/link";
 import { useRouter } from 'next/router'
+import { AddArticle } from "../../lib/dataAccess";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false,
@@ -17,9 +16,7 @@ const Editor = dynamic(() => import("../../components/Editor"), {
 });
 
 function Home() {
-  const { user } = useContext(UserContext);
   let editorInstance = useRef<EditorJS>(null);
-  let formRef = useRef(null);
   const [fields, setFields] = useState<ArticleFormModel>({ title: "" });
   const router = useRouter()
 
@@ -28,15 +25,16 @@ function Home() {
 
     const slug = encodeURI(kebabCase(fields.title));
     const editorData = await editorInstance.current.save();
-    const ref = firestore.collection('users').doc(auth.currentUser.uid).collection('articles').doc(slug);
-    
+
     const data:ArticleModel = {
       ...editorData,
       ...fields,
       slug: slug,
-      authorUri: auth.currentUser.uid
+      authorId: auth.currentUser.uid
     }
-    await ref.set(data);
+    
+    await AddArticle(auth.currentUser.uid, slug, data);
+
     router.push(`/user/${auth.currentUser.uid}/article/${slug}`);//eg.history.push('/login');
   };
 

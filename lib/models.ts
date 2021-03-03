@@ -6,9 +6,16 @@ export interface ArticleFormModel{
 
 export interface ArticleModel{
     version?: string,
-    authorUri: string,
+    authorId: string,
     slug: string,
     title: string,
     time?: number,
     blocks: OutputBlockData[]
+}
+
+export interface ArticleType{
+    articleId: string,
+    name: string,
+    homePage: string,
+    order: number
 }

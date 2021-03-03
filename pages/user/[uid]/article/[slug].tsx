@@ -5,6 +5,8 @@ import { Layout } from "../../../../components/Layout";
 import { auth, firestore } from "../../../../lib/firebase";
 import { UserContext } from "../../../../lib/contexts";
 import { ArticleModel } from "../../../../lib/models";
+import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
+
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
   ssr: false,
@@ -14,13 +16,7 @@ const Editor = dynamic(() => import("../../../../components/Editor"), {
 export async function getServerSideProps({ query }) {
   const { uid, slug } = query;
 
-  const articleSnapShot = await firestore
-    .collection("users")
-    .doc(uid)
-    .collection("articles")
-    .doc(slug)
-    .get();
-  const articleJson = articleSnapShot.data();
+  const articleJson = await GetArticle(uid, slug);
   return {
     props: { articleJson, uid, slug },
   };
@@ -31,19 +27,10 @@ const Article = ({ articleJson, uid, slug }) => {
   const [article, setArticle] = useState<ArticleModel>(articleJson);
   const [editMode, setEditMode] = useState(false);
 
-  const UpdateArticle = async () => {
-    await firestore
-      .collection("users")
-      .doc(auth.currentUser.uid)
-      .collection("articles")
-      .doc(slug)
-      .set(article);
-  };
-
   useEffect(() => {
     if (!editMode) {
       console.log("UPDATE");
-      UpdateArticle();
+      UpdateArticle(auth.currentUser.uid, slug, article);
     }
   }, [editMode]);
 
