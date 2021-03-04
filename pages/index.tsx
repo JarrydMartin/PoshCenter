@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Layout } from "../components/Layout";
 import { ArticleType } from "../lib/models";
 import { GetArticleTypes } from "../lib/dataAccess";
-import ArticleTypeAside from "../components/ArticleTypeAside";
+import ArticleIndexAside from "../components/ArticleIndexAside";
 
 function Home() {
   

@@ -5,7 +5,8 @@ import NavBar from "./NavBar";
 import { ArticleModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
 import Link from "next/link";
-import ArticleTypeAside from "./ArticleTypeAside";
+import ArticleIndexAside from "./ArticleIndexAside";
+import SideBar from "./SideBar";
 
 export function Layout({
   children,
@@ -31,8 +32,7 @@ export function Layout({
       <main className={layout.pageMain}>{children}</main>
       <aside className={layout.pageSidebar}>
         <>
-          <h2>Index</h2>
-          {asideComponent ? asideComponent: <ArticleTypeAside/>}
+          {asideComponent ? asideComponent: <SideBar />}
         </>
       </aside>
       <footer className={layout.pageFooter}>Footer</footer>

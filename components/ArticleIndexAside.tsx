@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { GetArticleTypes } from "../lib/dataAccess";
 
-const ArticleTypeAside = () => {
+const ArticleIndexAside = () => {
   const [articleTypes, setArticleTypes] = useState(null);
 
   const getData = async () => {
@@ -24,6 +24,7 @@ const ArticleTypeAside = () => {
   }, []);
   return (
     <div>
+      <h2>Index</h2>
       <List component="nav" aria-label="main index navigation">
         {articleTypes}
       </List>
@@ -42,4 +43,4 @@ function ArticleTypeItem(props) {
   );
 }
 
-export default ArticleTypeAside;
+export default ArticleIndexAside;

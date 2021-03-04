@@ -8,6 +8,7 @@ import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import EditNavBar from "../../../../components/EditNavBar";
 import EditSideBar from "../../../../components/EditSideBar";
 import { ARTICLE_MODE } from "../../../../lib/enums";
+import SideBar from "../../../../components/SideBar";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
   ssr: false,
@@ -36,7 +37,9 @@ const Article = ({ articleJson, slug }) => {
 
   return (
     <Layout
-      asideComponent={<EditSideBar 
+      asideComponent={<SideBar
+      article={article}
+      setArticle={setArticle}
           articleMode={articleMode}
           setArticleMode={setArticleMode}/>}
       navComponent={
