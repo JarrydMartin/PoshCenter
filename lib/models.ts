@@ -10,7 +10,9 @@ export interface ArticleModel{
     slug: string,
     title: string,
     time?: number,
-    blocks: OutputBlockData[]
+    blocks: OutputBlockData[],
+    published: boolean,
+    articleTypeSlug: string
 }
 
 export interface ArticleType{

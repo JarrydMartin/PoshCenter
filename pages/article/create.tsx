@@ -31,7 +31,9 @@ function Home() {
       ...editorData,
       ...fields,
       slug: slug,
-      authorId: auth.currentUser.uid
+      authorId: auth.currentUser.uid,
+      published: false,
+      articleTypeSlug: "none"
     }
     
     await AddArticle(auth.currentUser.uid, slug, data);
@@ -42,13 +44,13 @@ function Home() {
   return (
     <Layout>
       <AuthCheck>
-      <CreateArticleForm fields={fields} setFields={setFields} />
-      
-      <Button type="submit" onClick={createArticle}>
-        Create
-      </Button>
-  
-      <Editor editorInstance={editorInstance} data={null}/>
+        <CreateArticleForm fields={fields} setFields={setFields} />
+        
+          <Button type="submit" onClick={createArticle}>
+            Create
+          </Button>
+    
+        <Editor editorInstance={editorInstance} data={null}/>
       </AuthCheck>
     </Layout>
   );

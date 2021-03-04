@@ -2,11 +2,11 @@ import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import React, { useEffect, useRef, useState } from "react";
 import { Layout } from "../../../../components/Layout";
-import { auth} from "../../../../lib/firebase";
+import { auth } from "../../../../lib/firebase";
 import { ArticleModel } from "../../../../lib/models";
 import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import EditNavBar from "../../../../components/EditNavBar";
-
+import EditSideBar from "../../../../components/EditSideBar";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
   ssr: false,
@@ -15,7 +15,7 @@ const Editor = dynamic(() => import("../../../../components/Editor"), {
 
 export async function getServerSideProps({ query }) {
   const { uid, slug } = query;
-  console.log(uid)
+  console.log(uid);
   const articleJson = await GetArticle(uid, slug);
   return {
     props: { articleJson, slug },
@@ -35,6 +35,7 @@ const Article = ({ articleJson, slug }) => {
 
   return (
     <Layout
+      asideComponent={<EditSideBar />}
       navComponent={
         <EditNavBar
           editMode={editMode}
@@ -45,7 +46,6 @@ const Article = ({ articleJson, slug }) => {
         />
       }
     >
-      
       <Editor
         data={article}
         editorInstance={editorInstance}
