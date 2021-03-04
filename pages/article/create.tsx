@@ -9,6 +9,7 @@ import { auth } from "../../lib/firebase";
 import kebabCase from 'lodash.kebabcase';
 import { useRouter } from 'next/router'
 import { AddArticle } from "../../lib/dataAccess";
+import AuthCheck from "../../components/AuthCheck";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
   ssr: false,
@@ -40,6 +41,7 @@ function Home() {
 
   return (
     <Layout>
+      <AuthCheck>
       <CreateArticleForm fields={fields} setFields={setFields} />
       
       <Button type="submit" onClick={createArticle}>
@@ -47,6 +49,7 @@ function Home() {
       </Button>
   
       <Editor editorInstance={editorInstance} data={null}/>
+      </AuthCheck>
     </Layout>
   );
 }

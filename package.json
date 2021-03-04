@@ -25,6 +25,8 @@
     "@editorjs/simple-image": "latest",
     "@editorjs/table": "latest",
     "@editorjs/warning": "latest",
+    "@firebase/auth-types": "^0.10.2",
+    "@firebase/firestore-types": "^2.1.0",
     "@material-ui/core": "latest",
     "@react-firebase/auth": "^0.2.10",
     "clsx": "latest",
