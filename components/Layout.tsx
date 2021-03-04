@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import { ArticleModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
 import Link from "next/link";
+import ArticleTypeAside from "./ArticleTypeAside";
 
 export function Layout({
   children,
@@ -28,7 +29,12 @@ export function Layout({
         {navComponent ? navComponent : <NavBar />}
       </nav>
       <main className={layout.pageMain}>{children}</main>
-      <aside className={layout.pageSidebar}><><h2>Index</h2>{asideComponent}</></aside>
+      <aside className={layout.pageSidebar}>
+        <>
+          <h2>Index</h2>
+          {asideComponent ? asideComponent: <ArticleTypeAside/>}
+        </>
+      </aside>
       <footer className={layout.pageFooter}>Footer</footer>
     </div>
   );

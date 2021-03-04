@@ -10,9 +10,7 @@ function Home() {
   
 
   return (
-    <Layout asideComponent={
-      <ArticleTypeAside/>
-    }>
+    <Layout>
     </Layout>
   );
 }
