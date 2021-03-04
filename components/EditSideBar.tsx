@@ -1,43 +1,30 @@
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { Dispatch } from "react";
+import { ARTICLE_MODE } from "../lib/enums";
 
-enum modeState {
-  create,
-  edit,
-  read,
+
+
+const EditSideBar = ({
+  articleMode,
+  setArticleMode
+}:{
+  articleMode: ARTICLE_MODE;
+  setArticleMode?: Dispatch<React.SetStateAction<ARTICLE_MODE>>;
 }
+) => {
 
-const EditSideBar = () => {
-  const [mode, setMode] = useState(modeState.read);
-
-  switch (mode) {
-    case modeState.read:
+  switch (articleMode) {
+    case ARTICLE_MODE.read:
       return (
         <div>
-          <Button
-            color="primary"
-            type="button"
-            onClick={() => {
-              setMode(modeState.edit);
-            }}
-          >
-            Edit Article
-          </Button>
+         
         </div>
       );
 
-    case modeState.edit:
+    case ARTICLE_MODE.edit:
       return (
         <div>
-          <Button
-            color="primary"
-            type="button"
-            onClick={() => {
-              setMode(modeState.read);
-            }}
-          >
-            Save Article
-          </Button>
+         
         </div>
       );
 

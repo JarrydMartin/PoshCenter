@@ -7,6 +7,7 @@ import { ArticleModel } from "../../../../lib/models";
 import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import EditNavBar from "../../../../components/EditNavBar";
 import EditSideBar from "../../../../components/EditSideBar";
+import { ARTICLE_MODE } from "../../../../lib/enums";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
   ssr: false,
@@ -25,21 +26,23 @@ export async function getServerSideProps({ query }) {
 const Article = ({ articleJson, slug }) => {
   let editorInstance = useRef<EditorJS>(null);
   const [article, setArticle] = useState<ArticleModel>(articleJson);
-  const [editMode, setEditMode] = useState(false);
+  const [articleMode, setArticleMode] = useState(ARTICLE_MODE.read);
 
   useEffect(() => {
-    if (!editMode && auth.currentUser) {
+    if ((articleMode == ARTICLE_MODE.read) && auth.currentUser) {
       UpdateArticle(auth.currentUser.uid, slug, article);
     }
-  }, [editMode]);
+  }, [articleMode]);
 
   return (
     <Layout
-      asideComponent={<EditSideBar />}
+      asideComponent={<EditSideBar 
+          articleMode={articleMode}
+          setArticleMode={setArticleMode}/>}
       navComponent={
         <EditNavBar
-          editMode={editMode}
-          setEditMode={setEditMode}
+          articleMode={articleMode}
+          setArticleMode={setArticleMode}
           article={article}
           setArticle={setArticle}
           editorRef={editorInstance}
@@ -49,7 +52,7 @@ const Article = ({ articleJson, slug }) => {
       <Editor
         data={article}
         editorInstance={editorInstance}
-        isReadOnly={!editMode}
+        isReadOnly={articleMode== ARTICLE_MODE.read}
       />
     </Layout>
   );

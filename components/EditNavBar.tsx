@@ -1,51 +1,68 @@
-import React, { Dispatch, MutableRefObject } from 'react'
-import { ArticleModel } from '../lib/models'
+import React, { Dispatch, MutableRefObject } from "react";
+import { ArticleModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
-import { Button } from '@material-ui/core';
-import NavBar from './NavBar';
+import { Button } from "@material-ui/core";
+import NavBar from "./NavBar";
+import { ARTICLE_MODE } from "../lib/enums";
 
 const EditNavBar = ({
-    editMode,
-    setEditMode,
-    article,
-    setArticle,
-    editorRef
-    }:{editMode: boolean;
-        setEditMode?: Dispatch<React.SetStateAction<boolean>>;
-        article?: ArticleModel;
-        setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
-        editorRef?:MutableRefObject<EditorJS>;}) => {
+  articleMode,
+  setArticleMode,
+  article,
+  setArticle,
+  editorRef,
+}: {
+  articleMode: ARTICLE_MODE;
+  setArticleMode?: Dispatch<React.SetStateAction<ARTICLE_MODE>>;
+  article?: ArticleModel;
+  setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
+  editorRef?: MutableRefObject<EditorJS>;
+}) => {
 
-            const handleEditClick = async () => {
-                if(editMode){
-                  const editorData = await editorRef.current.save();
-                  setArticle({...article, ...editorData})
-                }
-                setEditMode(!editMode)
-              }
-            
-              const EditArticleButton = () => {
-                if(editorRef){
-                return (
-                  <Button
-                    color="primary"
-                    type="button"
-                    onClick={handleEditClick}
-                  >
-                    {editMode ? "Save Article" : "Edit Article"}
-                  </Button>
-                );
-              } else {
-                return (
-                  <></>
-                )
-              }
-            };
-    return (
-        <NavBar>
-            <EditArticleButton />
-        </NavBar>
-    )
-}
+  const handleEditClick = async (newArticelMode: ARTICLE_MODE) => {
+    if (articleMode == ARTICLE_MODE.edit) {
+      const editorData = await editorRef.current.save();
+      setArticle({ ...article, ...editorData });
+    }
+    setArticleMode(newArticelMode);
+  };
 
-export default EditNavBar
+  const EditArticleButton = () => {
+    if (editorRef) {
+      switch (articleMode) {
+        case ARTICLE_MODE.edit:
+          return (
+            <Button
+              color="primary"
+              type="button"
+              onClick={() => handleEditClick(ARTICLE_MODE.read)}
+            >
+              Save Article
+            </Button>
+          );
+          case ARTICLE_MODE.read:
+            return (
+              <Button
+                color="primary"
+                type="button"
+                onClick={() => handleEditClick(ARTICLE_MODE.edit)}
+              >
+                Edit Article
+              </Button>
+            );
+        default:
+          break;
+      }
+    } else {
+      return <></>;
+    }
+  };
+
+  return (
+    <NavBar>
+      <EditArticleButton />
+    </NavBar>
+  );
+};
+
+export default EditNavBar;
