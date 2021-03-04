@@ -28,6 +28,7 @@
     "@firebase/auth-types": "^0.10.2",
     "@firebase/firestore-types": "^2.1.0",
     "@material-ui/core": "latest",
+    "@material-ui/icons": "^4.11.2",
     "@react-firebase/auth": "^0.2.10",
     "clsx": "latest",
     "firebase": "^8.2.9",

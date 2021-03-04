@@ -4,7 +4,7 @@ import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 
 const AuthButton = () => {
-  const { user } = useContext(UserContext);
+  const user  = useContext(UserContext);
   return <div>{user ? <SignOutButton /> : <SignInButton />}</div>;
 };
 

@@ -28,7 +28,7 @@ export function Layout({
         {navComponent ? navComponent : <NavBar />}
       </nav>
       <main className={layout.pageMain}>{children}</main>
-      <aside className={layout.pageSidebar}>{asideComponent}</aside>
+      <aside className={layout.pageSidebar}><><h2>Index</h2>{asideComponent}</></aside>
       <footer className={layout.pageFooter}>Footer</footer>
     </div>
   );
