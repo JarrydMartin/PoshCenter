@@ -1,22 +1,17 @@
-import { Avatar, Button, Link, makeStyles } from "@material-ui/core";
+import { Avatar, Button, makeStyles } from "@material-ui/core";
 import React, { Dispatch, MutableRefObject, useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 import { ArticleModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
+import Link from "next/link";
 
 const NavBar = ({
-  editMode,
-  setEditMode,
-  article,
-  setArticle,
-  editorRef
+  children,
+  
 }: {
-  editMode: boolean;
-  setEditMode?: Dispatch<React.SetStateAction<boolean>>;
-  article?: ArticleModel;
-  setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
-  editorRef?:MutableRefObject<EditorJS>;
+  children?:any
+  
 }) => {
   const classes = useStyles();
   const signInWithGoogle = async () => {
@@ -28,7 +23,9 @@ const NavBar = ({
       <>
         <p>{user?.displayName}</p>
         <Link href={`/user/${user?.uid}`}>
-          <Avatar alt={user?.displayName} src={user?.photoURL} />
+          <a>
+            <Avatar alt={user?.displayName} src={user?.photoURL} />
+          </a>
         </Link>
         <Button onClick={() => auth.signOut()}>Sign Out</Button>
       </>
@@ -45,32 +42,6 @@ const NavBar = ({
     );
   };
 
-  const handleEditClick = async () => {
-    if(editMode){
-      const editorData = await editorRef.current.save();
-      setArticle({...article, ...editorData})
-    }
-    setEditMode(!editMode)
-  }
-
-  const EditArticleButton = () => {
-    if(editorRef){
-    return (
-      <Button
-        color="primary"
-        type="button"
-        onClick={handleEditClick}
-      >
-        {editMode ? "Save Article" : "Edit Article"}
-      </Button>
-    );
-  } else {
-    return (
-      <></>
-    )
-  }
-  };
-
   const SigninButton = () => {
     return (
       <Button className="btn-google" onClick={signInWithGoogle}>
@@ -85,7 +56,7 @@ const NavBar = ({
       {user ? (
         <>
           <NewArticleButton />
-          <EditArticleButton />
+          {children}
           <NavProfile />
         </>
       ) : (

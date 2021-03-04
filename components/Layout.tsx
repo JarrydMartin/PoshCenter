@@ -4,36 +4,31 @@ import AuthButton from "./AuthButton";
 import NavBar from "./NavBar";
 import { ArticleModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
+import Link from "next/link";
 
 export function Layout({
   children,
-  editMode,
-  setEditMode,
-  article,
-  setArticle,
-  editorRef,
+  navComponent,
+  asideComponent,
 }: {
   children: any;
-  editMode?: boolean;
-  setEditMode?: Dispatch<React.SetStateAction<boolean>>;
-  article?: ArticleModel;
-  setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
-  editorRef?:MutableRefObject<EditorJS>;
+  asideComponent?: any;
+  navComponent?: any;
 }) {
   return (
     <div className={layout.pageWrap}>
-      <header className={layout.pageHeader}>Posh Centre</header>
+      <header className={layout.pageHeader}>
+        <Link href="/">
+          <a style={{ color: "inherit", textDecoration: "inherit" }}>
+            <h1>Health and Safety Net</h1>
+          </a>
+        </Link>
+      </header>
       <nav className={layout.pageNav}>
-        <NavBar
-          editMode={editMode}
-          setEditMode={setEditMode}
-          article={article}
-          setArticle={setArticle}
-          editorRef={editorRef}
-        />
+        {navComponent ? navComponent : <NavBar />}
       </nav>
       <main className={layout.pageMain}>{children}</main>
-      <aside className={layout.pageSidebar}>Aside</aside>
+      <aside className={layout.pageSidebar}>{asideComponent}</aside>
       <footer className={layout.pageFooter}>Footer</footer>
     </div>
   );
