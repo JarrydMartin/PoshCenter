@@ -8,7 +8,6 @@ const ArticleIndexAside = () => {
 
   const getData = async () => {
     const data = await GetArticleTypes();
-    console.log(data);
     setArticleTypes(
       data
         .sort((a, b) => (a.order > b.order ? 1 : -1))
@@ -20,7 +19,6 @@ const ArticleIndexAside = () => {
 
   useEffect(() => {
     getData();
-    console.log(articleTypes);
   }, []);
   return (
     <div>
