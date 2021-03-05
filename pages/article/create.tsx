@@ -33,7 +33,9 @@ function Home() {
       slug: slug,
       authorId: auth.currentUser.uid,
       published: false,
-      articleTypeSlug: "none"
+      articleTypeSlug: "none",
+      heroDescription: "",
+      heroImg: ""
     }
     
     await AddArticle(auth.currentUser.uid, slug, data);
