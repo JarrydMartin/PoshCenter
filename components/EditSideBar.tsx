@@ -4,6 +4,7 @@ import { GetArticleTypes } from "../lib/dataAccess";
 import { ARTICLE_MODE } from "../lib/enums";
 import { ArticleModel, ArticleType } from "../lib/models";
 import ArticleIndexAside from "./ArticleIndexAside";
+import ImageUploader from "./ImgaeUploader";
 
 const EditArticleAside = ({
   article,
@@ -18,7 +19,7 @@ const EditArticleAside = ({
 
   const getArticleTypes = async () => {
     const data = await GetArticleTypes();
-    setArticleTypes(data)
+    setArticleTypes(data);
   }
 
   useEffect(() => {
@@ -35,6 +36,19 @@ const EditArticleAside = ({
           value={article.title}
           onChange={(e) => setArticle({ ...article, title: e.target.value })}
         />
+        <TextField
+          id="disc"
+          label="Description"
+          multiline
+          value={article.heroDescription}
+          onChange={(e) => setArticle({ ...article, heroDescription: e.target.value })}
+        />
+        <TextField
+          id="heroImage"
+          label="Display Image"
+          value={article.heroImg}
+          onChange={(e) => setArticle({ ...article, heroImg: e.target.value })}
+        />
          
        <FormControl>
         <InputLabel id="articleType">Type</InputLabel>
@@ -47,6 +61,7 @@ const EditArticleAside = ({
           {articleTypes.map(a => <MenuItem value={a.slug}> {a.name }</MenuItem>)}
         </Select>
       </FormControl>
+
       <FormControlLabel
         control={
           <Switch
@@ -58,6 +73,7 @@ const EditArticleAside = ({
         }
         label="Published"
       />
+      <ImageUploader/>
       </form>
     </div>
   );

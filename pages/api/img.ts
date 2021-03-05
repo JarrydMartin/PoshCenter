@@ -1,10 +1,11 @@
-const formidable = require('formidable');
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default (req, res) => {
-
-	const form = formidable({ multiples: true });
-      
-    form.parse(req, (err, fields, files) => {
-      res.end(JSON.stringify({ fields, files }, null, 2));
-    });
-  }
+export default (req: NextApiRequest, res: NextApiResponse) => {
+  console.log(req.body)
+  res.status(200).json({
+    success : 1,
+    file: {
+        url : req.body.url
+    }
+})
+}

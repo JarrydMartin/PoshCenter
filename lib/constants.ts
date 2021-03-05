@@ -6,7 +6,7 @@ import Quote from '@editorjs/quote'
 import Marker from '@editorjs/marker'
 import CheckList from '@editorjs/checklist'
 import Delimiter from '@editorjs/delimiter'
-import SimpleImage from '@editorjs/simple-image'
+import Image from '@editorjs/image'
 
 export const EDITOR_JS_TOOLS = {
     header: {
@@ -29,5 +29,12 @@ export const EDITOR_JS_TOOLS = {
         inlineToolbar: true,
       },
     delimiter: Delimiter,
-    simpleImage: SimpleImage
+    image: {
+        class: Image,
+        config: {
+          endpoints: {
+            byUrl: 'http://localhost:3000/api/img', // Your endpoint that provides uploading by Url
+          }
+        }
+    }
 }

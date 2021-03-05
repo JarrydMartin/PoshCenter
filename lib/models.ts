@@ -12,7 +12,9 @@ export interface ArticleModel{
     time?: number,
     blocks: OutputBlockData[],
     published: boolean,
-    articleTypeSlug: string
+    articleTypeSlug: string,
+    heroImg: string,
+    heroDescription: string
 }
 
 export interface ArticleType{

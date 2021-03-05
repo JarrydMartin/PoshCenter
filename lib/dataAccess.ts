@@ -112,5 +112,5 @@ export async function GetArticleTypes() {
     } catch (error) {
         console.log(error);
     }
-    return {};
+    return [] as ArticleType[];
 }
