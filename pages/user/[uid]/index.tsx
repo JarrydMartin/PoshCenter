@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import ArticleCard from '../../../components/ArticleCard';
 import { Layout } from '../../../components/Layout';
-import { GetUserArticles } from '../../../lib/dataAccess';
+import { GetPublishedUserArticles, GetUserArticles } from '../../../lib/dataAccess';
 import { makeStyles } from '@material-ui/core';
 import AuthCheck from '../../../components/AuthCheck';
 import { UserContext } from '../../../lib/contexts';
@@ -20,7 +20,7 @@ const UserIndex = () => {
 
     const getArticles = async () => {
         if(user){
-            const userArticles = await GetUserArticles(user.uid)
+            const userArticles = await GetPublishedUserArticles(user.uid)
             setArticles(userArticles.map(a => <ArticleCard key={a.slug} article={a}/>))
         }
     }
@@ -30,12 +30,10 @@ const UserIndex = () => {
     }, [user])
     
     return (
-        <Layout>
-            <AuthCheck>
+        <Layout>    
                 <div className={classes.root}>
                     {articles}
                 </div>
-            </AuthCheck>
         </Layout>
     )
 }

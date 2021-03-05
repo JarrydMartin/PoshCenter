@@ -20,7 +20,6 @@ const Editor = dynamic(() => import("../../../../components/Editor"), {
 
 export async function getServerSideProps({ query }) {
   const { uid, slug } = query;
-  console.log(uid);
   const articleJson = await GetArticle(uid, slug);
   return {
     props: { articleJson, slug },

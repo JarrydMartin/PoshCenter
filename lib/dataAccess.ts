@@ -56,6 +56,28 @@ export async function GetPublishedArticlesByType(typeSlug: string) {
     return data;
 }
 
+export async function GetPublishedUserArticles(UserId: string) {
+    let data: any[] = [];
+      try {
+          
+          const userRef = firestore
+              .collection("users")
+              .doc(UserId)
+              .collection("articles")
+              .where("published", "==", true);
+          const snapshot = await userRef.get();
+          snapshot.forEach((doc) => {
+              data.push(doc.data());
+          });
+  
+          
+      } catch (error) {
+          console.log(error);
+      }
+      return data;
+  }
+
+
 export async function UpdateArticle(
     UserId: string,
     articleSlug: string,

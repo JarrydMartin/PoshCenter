@@ -2,10 +2,11 @@ import { Button } from "@material-ui/core";
 import React, { useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
+import { useUser } from "../lib/hooks";
 
 const AuthButton = () => {
-  const user  = useContext(UserContext);
-  return <div>{user ? <SignOutButton /> : <SignInButton />}</div>;
+  const {isSignedIn}  = useUser();
+  return <div>{isSignedIn ? <SignOutButton /> : <SignInButton />}</div>;
 };
 
 // Sign in with Google button

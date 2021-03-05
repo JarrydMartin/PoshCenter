@@ -14,10 +14,12 @@ export enum ArticleMode {
  * 
 */
 export enum UserRoles {
+  /** Users that is only browsing and can not contribute in an way. */
+  ANON = "Anonymous",
   /** Users can can only read published articles */
-  READER, 
+  READER = "Reader", 
   /** Users can read and create articles and edit their own articles */
-  EDITOR,
+  EDITOR = "Editor",
   /** Users that will have admin rights for maintainin the site as a whole */
-  ADMIN
+  ADMIN = "Admin"
 }

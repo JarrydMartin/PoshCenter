@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 import Link from "next/link";
+import { UserRoles } from "../lib/enums";
+import { useUser } from "../lib/hooks";
 
 const NavBar = ({
   children,
@@ -12,7 +14,7 @@ const NavBar = ({
   
 }) => {
   const classes = useStyles();
-  const user  = useContext(UserContext);
+  const {user, canEdit, isSignedIn}  = useUser();
 
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
@@ -21,12 +23,12 @@ const NavBar = ({
   const NavProfile = () => {
     return (
       <>
-        <Link href={`/user/${user?.uid}`}>
+        <Link href={`/profile`}>
           <a>
             <Avatar alt={user?.name} src={user?.profileImage} />
           </a>
         </Link>
-        <Button onClick={() => auth.signOut()}>Sign Out</Button>
+       
       </>
     );
   };
@@ -49,17 +51,26 @@ const NavBar = ({
     );
   };
 
+  const SignOutButton = () => {
+   return (<Button onClick={() => auth.signOut()}>Sign Out</Button> )
+  }
+
  
   return (
     <div className={classes.root}>
-      {user ? (
+      
+      {isSignedIn? (
         <>
-          <NewArticleButton />
+        {canEdit && <NewArticleButton />}
           {children}
           <NavProfile />
         </>
+        
       ) : (
+        <>
+        <NavProfile />
         <SigninButton />
+        </>
       )}
     </div>
   );
