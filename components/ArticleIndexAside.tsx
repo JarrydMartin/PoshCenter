@@ -13,7 +13,7 @@ const ArticleIndexAside = () => {
       data
         .sort((a, b) => (a.order > b.order ? 1 : -1))
         .map((a) => (
-          <ArticleTypeItem to={`/article/${a.slug}`} primary={a.name} />
+          <ArticleTypeItem key={a.slug} to={`/article/${a.slug}`} primary={a.name} />
         ))
     );
   };

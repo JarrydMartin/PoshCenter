@@ -22,6 +22,21 @@ export async function GetUserArticles(UserId: string) {
   return data
 }
 
+export async function GetPublishedArticlesByType(typeSlug:string) {
+  let data:any[]= [];
+  const articleRef = firestore
+    .collectionGroup('articles')
+    .where('articleTypeSlug', '==', typeSlug)
+    .where('published', '==', true)
+    .orderBy('time', 'desc');
+
+    const snapshot = await articleRef.get();
+    snapshot.forEach(doc => {
+      data.push(doc.data());
+    });
+    return data
+}
+
 
 export async function UpdateArticle(
   UserId: string,
