@@ -1,7 +1,7 @@
 import { Button, createStyles, FormControl, FormControlLabel, InputLabel, makeStyles, MenuItem, Select, Switch, TextField } from "@material-ui/core";
 import React, { Dispatch, useEffect, useState } from "react";
 import { GetArticleTypes } from "../lib/dataAccess";
-import { ARTICLE_MODE } from "../lib/enums";
+import { ArticleMode } from "../lib/enums";
 import { ArticleModel, ArticleType } from "../lib/models";
 import ArticleIndexAside from "./ArticleIndexAside";
 import ImageUploader from "./ImgaeUploader";

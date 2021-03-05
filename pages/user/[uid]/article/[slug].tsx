@@ -7,7 +7,7 @@ import { ArticleModel } from "../../../../lib/models";
 import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import EditNavBar from "../../../../components/EditNavBar";
 import EditSideBar from "../../../../components/EditSideBar";
-import { ARTICLE_MODE } from "../../../../lib/enums";
+import { ArticleMode } from "../../../../lib/enums";
 import SideBar from "../../../../components/SideBar";
 import { useUserData } from "../../../../lib/hooks";
 import { useRouter } from "next/router";
@@ -34,14 +34,13 @@ const Article = ({ articleJson, slug }) => {
   const pageuid = router.query["uid"] as string;
   const [isOwner, setIseOwner] = useState<boolean>(false);
   const [article, setArticle] = useState<ArticleModel>(articleJson);
-  const [articleMode, setArticleMode] = useState(ARTICLE_MODE.read);
+  const [articleMode, setArticleMode] = useState(ArticleMode.READ);
 
   useEffect(() => {
     if (user?.uid == pageuid) {
       setIseOwner(true);
     }
-
-    if (articleMode == ARTICLE_MODE.read && isOwner) {
+    if (articleMode == ArticleMode.READ && isOwner) {
       UpdateArticle(auth.currentUser.uid, slug, article);
     }
   }, [articleMode]);
@@ -70,7 +69,7 @@ const Article = ({ articleJson, slug }) => {
         <Editor
           data={article}
           editorInstance={editorInstance}
-          isReadOnly={articleMode == ARTICLE_MODE.read}
+          isReadOnly={articleMode == ArticleMode.READ}
         />
       </Layout> :
        <Layout>

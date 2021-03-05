@@ -1,9 +1,7 @@
 import { Avatar, Button, makeStyles } from "@material-ui/core";
-import React, { Dispatch, MutableRefObject, useContext } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
-import { ArticleModel } from "../lib/models";
-import EditorJS from "@editorjs/editorjs";
 import Link from "next/link";
 
 const NavBar = ({
@@ -14,17 +12,18 @@ const NavBar = ({
   
 }) => {
   const classes = useStyles();
+  const user  = useContext(UserContext);
+
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
-
+  
   const NavProfile = () => {
     return (
       <>
-        <p>{user?.displayName}</p>
         <Link href={`/user/${user?.uid}`}>
           <a>
-            <Avatar alt={user?.displayName} src={user?.photoURL} />
+            <Avatar alt={user?.name} src={user?.profileImage} />
           </a>
         </Link>
         <Button onClick={() => auth.signOut()}>Sign Out</Button>
@@ -50,7 +49,7 @@ const NavBar = ({
     );
   };
 
-  const user  = useContext(UserContext);
+ 
   return (
     <div className={classes.root}>
       {user ? (
