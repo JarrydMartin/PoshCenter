@@ -14,7 +14,6 @@ const Editor = ({
   isReadOnly?: boolean;
   
 }) => {
-
   return (
     <EditorJs
       tools={EDITOR_JS_TOOLS}

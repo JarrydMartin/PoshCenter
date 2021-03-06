@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import ArticleCard from '../../components/ArticleCard'
 import { Layout } from '../../components/Layout'
 import { GetPublishedArticlesByType } from '../../lib/dataAccess'
+import { useUser } from '../../lib/hooks'
 
 const ArtcileHomePage = () => {
     const router = useRouter()
+    const {user, isSignedIn, canEdit} =  useUser();
     const [articles, setArticles] = useState(null);
     const slug  = router.query["slug"] as string
 
@@ -18,7 +20,7 @@ const ArtcileHomePage = () => {
         getPublishedTypedArticles()
     }, [router])
     return (
-        <Layout>
+        <Layout user={user} canEdit={canEdit} isSignedIn={isSignedIn}>
             {articles}
         </Layout>
     )

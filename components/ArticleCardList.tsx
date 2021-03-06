@@ -9,7 +9,7 @@ const ArticleCardList = ({articles}:{articles:ArticleModel[]}) => {
     
     return (
         <div className={classes.root}>
-        {articleList}
+          {articleList}
         </div>
     )
 }

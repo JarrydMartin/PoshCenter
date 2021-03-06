@@ -18,7 +18,7 @@ const Editor = dynamic(() => import("../../components/Editor"), {
 });
 
 function Home() {
-    const { user } = useUser();
+    const {user, isSignedIn, canEdit} =  useUser();
     let editorInstance = useRef<EditorJS>(null);
     const [article, setArticle] = useState<ArticleModel>(null);
     const router = useRouter();
@@ -39,9 +39,10 @@ function Home() {
           setArticle(defaultArticle);
         }
     }, [user]);
+    
     const createArticle = async (e) => {
         e.preventDefault();
-
+    
         const editorData = await editorInstance.current.save();
         const newArticle: ArticleModel = {
           ...article, 
@@ -56,13 +57,15 @@ function Home() {
 
     return (
         <Layout
+        user={user} canEdit={canEdit} isSignedIn={isSignedIn}
             asideComponent={
-                <AuthCheck roleAccess={UserRoles.EDITOR}>
+                <AuthCheck user={user} roleAccess={UserRoles.EDITOR}>
                     <>
                         <h2>Create Article</h2>
                         {article &&
                         <>
                         <EditArticleAside
+                            user={user}
                             article={article}
                             setArticle={setArticle}
                         />
@@ -74,7 +77,7 @@ function Home() {
                     </>
                 </AuthCheck>
             }>
-            <AuthCheck roleAccess={UserRoles.EDITOR}>
+            <AuthCheck user={user} roleAccess={UserRoles.EDITOR}>
                 <Editor editorInstance={editorInstance} data={null} />
             </AuthCheck>
         </Layout>

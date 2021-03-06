@@ -2,14 +2,14 @@ import { Button, TextareaAutosize, TextField } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../lib/contexts";
 import { storage, STATE_CHANGED } from "../lib/firebase";
+import { UserModel } from "../lib/models";
 import Loader from "./Loader";
 
 // Uploads images to Firebase Storage
-export default function ImageUploader() {
+export default function ImageUploader({user}:{user:UserModel}) {
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [downloadURL, setDownloadURL] = useState(null);
-    const user = useContext(UserContext);
 
     // Creates a Firebase Upload Task
     const uploadFile = async (e) => {

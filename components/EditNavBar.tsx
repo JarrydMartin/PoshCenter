@@ -1,22 +1,28 @@
 import React, { Dispatch, MutableRefObject } from "react";
-import { ArticleModel } from "../lib/models";
+import { ArticleModel, UserModel } from "../lib/models";
 import EditorJS from "@editorjs/editorjs";
 import { Button } from "@material-ui/core";
 import NavBar from "./NavBar";
 import { ArticleMode } from "../lib/enums";
 
-const EditNavBar = ({
+const NavBarAsEditor = ({
   articleMode,
   setArticleMode,
   article,
   setArticle,
   editorRef,
+  user,
+  canEdit,
+  isSignedIn
 }: {
   articleMode: ArticleMode;
   setArticleMode?: Dispatch<React.SetStateAction<ArticleMode>>;
   article?: ArticleModel;
   setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
   editorRef?: MutableRefObject<EditorJS>;
+  user: UserModel;
+  canEdit: boolean;
+  isSignedIn: boolean;
 }) => {
 
   const handleEditClick = async (newArticelMode: ArticleMode) => {
@@ -59,10 +65,10 @@ const EditNavBar = ({
   };
 
   return (
-    <NavBar>
+    <NavBar user={user} canEdit={canEdit} isSignedIn={isSignedIn}>
       <EditArticleButton />
     </NavBar>
   );
 };
 
-export default EditNavBar;
+export default NavBarAsEditor;

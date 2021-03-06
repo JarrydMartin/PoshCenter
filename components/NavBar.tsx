@@ -5,89 +5,74 @@ import { auth, googleAuthProvider } from "../lib/firebase";
 import Link from "next/link";
 import { UserRoles } from "../lib/enums";
 import { useUser } from "../lib/hooks";
+import UserAvatar from "./Avitar";
+import { UserModel } from "../lib/models";
 
 const NavBar = ({
-  children,
-  
+    children,
+    user,
+    canEdit,
+    isSignedIn,
 }: {
-  children?:any
-  
+    children?: any;
+    user: UserModel;
+    canEdit: boolean;
+    isSignedIn: boolean;
 }) => {
-  const classes = useStyles();
-  const {user, canEdit, isSignedIn}  = useUser();
+    const classes = useStyles();
 
-  const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
-  };
-  
-  const NavProfile = () => {
+    const signInWithGoogle = async () => {
+        await auth.signInWithPopup(googleAuthProvider);
+    };
+
+    const NewArticleButton = () => {
+        return (
+            <Link href="/article/create">
+                <Button color="primary" type="button">
+                    New Article
+                </Button>
+            </Link>
+        );
+    };
+
+    const SigninButton = () => {
+        return (
+            <Button className="btn-google" onClick={signInWithGoogle}>
+                Sign in
+            </Button>
+        );
+    };
+
     return (
-      <>
-        <Link href={`/profile`}>
-          <a>
-            <Avatar alt={user?.name} src={user?.profileImage} />
-          </a>
-        </Link>
-       
-      </>
+        <div className={classes.root}>
+            {isSignedIn ? (
+                <>
+                    {canEdit && <NewArticleButton />}
+                    {children}
+                    <UserAvatar user={user} />
+                </>
+            ) : (
+                <>
+                    <UserAvatar user={user} />
+                    <SigninButton />
+                </>
+            )}
+        </div>
     );
-  };
-
-  const NewArticleButton = () => {
-    return (
-      <Link href="/article/create">
-        <Button color="primary" type="button">
-          New Article
-        </Button>
-      </Link>
-    );
-  };
-
-  const SigninButton = () => {
-    return (
-      <Button className="btn-google" onClick={signInWithGoogle}>
-        Sign in
-      </Button>
-    );
-  };
-
-  const SignOutButton = () => {
-   return (<Button onClick={() => auth.signOut()}>Sign Out</Button> )
-  }
-
- 
-  return (
-    <div className={classes.root}>
-      
-      {isSignedIn? (
-        <>
-        {canEdit && <NewArticleButton />}
-          {children}
-          <NavProfile />
-        </>
-        
-      ) : (
-        <>
-        <NavProfile />
-        <SigninButton />
-        </>
-      )}
-    </div>
-  );
 };
 
 const useStyles = makeStyles({
-  root: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    "& > *": {
-      margin: "4px",
+    root: {
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        "& > *": {
+            margin: "4px",
+        },
+        "& > p": {
+            fontSize: "18px",
+        },
     },
-    "& > p": {
-      fontSize: "18px",
-    },
-  },
 });
 
 export default NavBar;

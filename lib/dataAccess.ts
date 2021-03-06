@@ -17,8 +17,7 @@ export async function GetArticle(UserId: string, articleSlug: string) {
 }
 export async function GetUserArticles(UserId: string) {
   let data: any[] = [];
-    try {
-        
+    try {  
         const userRef = firestore
             .collection("users")
             .doc(UserId)
@@ -27,8 +26,6 @@ export async function GetUserArticles(UserId: string) {
         snapshot.forEach((doc) => {
             data.push(doc.data());
         });
-
-        
     } catch (error) {
         console.log(error);
     }

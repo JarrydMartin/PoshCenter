@@ -2,16 +2,18 @@ import { Button, createStyles, FormControl, FormControlLabel, InputLabel, makeSt
 import React, { Dispatch, useEffect, useState } from "react";
 import { GetArticleTypes } from "../lib/dataAccess";
 import { ArticleMode } from "../lib/enums";
-import { ArticleModel, ArticleType } from "../lib/models";
+import { ArticleModel, ArticleType, UserModel } from "../lib/models";
 import ArticleIndexAside from "./ArticleIndexAside";
 import ImageUploader from "./ImgaeUploader";
 
 const EditArticleAside = ({
   article,
   setArticle,
+  user,
 }: {
   article?: ArticleModel;
   setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
+  user: UserModel
 }) => {
 
   const classes = useStyles();
@@ -72,7 +74,7 @@ const EditArticleAside = ({
         }
         label="Published"
       />
-      <ImageUploader/>
+      <ImageUploader user={user}/>
       </form>
     </div>
   );

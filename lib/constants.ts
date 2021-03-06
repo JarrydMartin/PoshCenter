@@ -33,7 +33,7 @@ export const EDITOR_JS_TOOLS = {
         class: Image,
         config: {
           endpoints: {
-            byUrl: 'http://localhost:3000/api/img', // Your endpoint that provides uploading by Url
+            byUrl: '/api/img', // Your endpoint that provides uploading by Url
           }
         }
     }

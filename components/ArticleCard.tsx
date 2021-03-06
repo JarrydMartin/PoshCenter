@@ -16,13 +16,16 @@ const ArticleCard = ({ article }: { article: ArticleModel }) => {
     const classes = useStyles();
 
     return (
+        <Link href={`/user/${article.authorId}/article/${article.articleId}`}>
         <Card className={classes.root}>
-            <Link href={`/user/${article.authorId}/article/${article.articleId}`}>
+           
                 <CardActionArea>
+              
                     <CardMedia
                         className={classes.media}
                         image={article.heroImg}
                         title={article.title}
+                        src={article.heroImg}
                     />
 
                     <CardContent>
@@ -39,9 +42,11 @@ const ArticleCard = ({ article }: { article: ArticleModel }) => {
                             {article.heroDescription}
                         </Typography>
                     </CardContent>
+                    
                 </CardActionArea>
-            </Link>
+            
         </Card>
+        </Link>
     );
 };
 

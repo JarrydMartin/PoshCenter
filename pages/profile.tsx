@@ -1,22 +1,34 @@
-import { Button } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import ArticleCardList from '../components/ArticleCardList'
 import AuthButton from '../components/AuthButton'
-import AuthCheck from '../components/AuthCheck'
 import { Layout } from '../components/Layout'
-import { auth } from '../lib/firebase'
+import { GetUserArticles } from '../lib/dataAccess'
 import { useUser } from '../lib/hooks'
+import { ArticleModel } from '../lib/models'
 
 const profile = () => {
-    const {user} =  useUser();
+    const {user, isSignedIn, canEdit} =  useUser();
+    const [articles, setArticles] = useState<ArticleModel[]>(null); 
 
+    const getArticles = async () => {
+        if(user){
+            const userArticles = await GetUserArticles(user.uid);
+            setArticles(userArticles);
+        }
+    }
+
+    useEffect(() => {
+        getArticles();
+    }, [user])
+    
     return (
-        <Layout>
-            
+        <Layout user={user} canEdit={canEdit} isSignedIn={isSignedIn}>
             <div className="box-center">
-                <img width={200} height={200} src={user?.profileImage || '/hacker.png'} className="card-img-center" />
+                <img width={200} height={200} src={user?.profileImage} className="card-img-center" />
                 <h1>{user?.name || 'Anonymous User'}</h1>
                 <h2>{user?.role}</h2>
-                <AuthButton />
+                <AuthButton isSignedIn={isSignedIn} />
+                {articles && <ArticleCardList articles={articles} />}
             </div>
         </Layout>
     )

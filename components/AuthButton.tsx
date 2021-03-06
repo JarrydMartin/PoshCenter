@@ -4,8 +4,7 @@ import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 import { useUser } from "../lib/hooks";
 
-const AuthButton = () => {
-  const {isSignedIn}  = useUser();
+const AuthButton = ({isSignedIn}:{isSignedIn:boolean}) => {
   return <div>{isSignedIn ? <SignOutButton /> : <SignInButton />}</div>;
 };
 

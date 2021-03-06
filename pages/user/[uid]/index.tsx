@@ -8,19 +8,19 @@ import { makeStyles } from '@material-ui/core';
 import AuthCheck from '../../../components/AuthCheck';
 import { UserContext } from '../../../lib/contexts';
 import { auth } from '../../../lib/firebase';
+import { useUser } from '../../../lib/hooks';
 
 
 const UserIndex = () => {
     const classes = useStyles();
     const [articles, setArticles] = useState(null);
     const router = useRouter()
-    const user = useContext(UserContext)
+    const {user, isSignedIn, canEdit} =  useUser();
     const uid  = router.query["uid"] as string
-    auth.currentUser
 
     const getArticles = async () => {
         if(user){
-            const userArticles = await GetPublishedUserArticles(user.uid)
+            const userArticles = await GetPublishedUserArticles(uid)
             setArticles(userArticles.map(a => <ArticleCard key={a.slug} article={a}/>))
         }
     }
@@ -30,7 +30,7 @@ const UserIndex = () => {
     }, [user])
     
     return (
-        <Layout>    
+        <Layout user={user} canEdit={canEdit} isSignedIn={isSignedIn}>    
                 <div className={classes.root}>
                     {articles}
                 </div>
