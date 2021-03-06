@@ -26,7 +26,7 @@ function SignInButton() {
 
 // Sign out button
 function SignOutButton() {
-  return <Button onClick={async () => await auth.signOut() }>Sign Out</Button>;
+  return <Button onClick={async () => {await auth.signOut();  window.location.reload(false); }}>Sign Out</Button>;
 }
 
 export default AuthButton;
