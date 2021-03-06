@@ -5,7 +5,7 @@ import ArticleCard from './ArticleCard'
 
 const ArticleCardList = ({articles}:{articles:ArticleModel[]}) => {
     const classes = useStyles();
-    const articleList =  articles.map(a => <ArticleCard key={a.slug} article={a}/>);
+    const articleList =  articles.map(a => <ArticleCard key={a.articleId} article={a}/>);
     
     return (
         <div className={classes.root}>
