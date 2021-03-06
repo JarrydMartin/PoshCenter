@@ -1,4 +1,4 @@
-import React, { createRef, Dispatch, useRef } from "react";
+import React, { createRef, Dispatch, useEffect, useRef } from "react";
 import EditorJs from "react-editor-js";
 import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../lib/constants";
@@ -8,10 +8,12 @@ const Editor = ({
   editorInstance,
   data,
   isReadOnly,
+  holder = "customer"
 }: {
   editorInstance: React.MutableRefObject<EditorJS>;
   data: ArticleModel;
   isReadOnly?: boolean;
+  holder?: string
   
 }) => {
   return (
@@ -24,8 +26,7 @@ const Editor = ({
       }}
       data={data}
       readOnly={isReadOnly}
-      placeholder={"Click here to start editing the article..."}
-    />
+      />
   );
 };
 

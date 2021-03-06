@@ -1,9 +1,11 @@
 import { Avatar } from "@material-ui/core";
 import Link from "next/link";
-import React from "react";
-import { UserModel } from "../lib/models";
+import React, { useContext } from "react";
+import { UserContext } from "../lib/contexts";
 
-const UserAvatar = ({ user }: { user: UserModel }) => {
+
+const UserAvatar = () => {
+    const {user} = useContext(UserContext)
     return (
         <Link href={`/profile`}>
             <a>

@@ -1,5 +1,7 @@
 import { User } from '@firebase/auth-types';
 import { createContext } from 'react';
-import { UserModel } from './models';
+import { UserData, UserModel } from './models';
 
-export const UserContext = createContext<UserModel>(null);
+
+
+export const UserContext = createContext<UserData>(null);

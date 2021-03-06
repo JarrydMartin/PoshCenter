@@ -3,23 +3,11 @@ import React, { useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
 import Link from "next/link";
-import { UserRoles } from "../lib/enums";
-import { useUser } from "../lib/hooks";
 import UserAvatar from "./Avitar";
-import { UserModel } from "../lib/models";
 
-const NavBar = ({
-    children,
-    user,
-    canEdit,
-    isSignedIn,
-}: {
-    children?: any;
-    user: UserModel;
-    canEdit: boolean;
-    isSignedIn: boolean;
-}) => {
+const NavBar = ({ children }: { children?: any }) => {
     const classes = useStyles();
+    const { canEdit, isSignedIn } = useContext(UserContext);
 
     const signInWithGoogle = async () => {
         await auth.signInWithPopup(googleAuthProvider);
@@ -49,11 +37,11 @@ const NavBar = ({
                 <>
                     {canEdit && <NewArticleButton />}
                     {children}
-                    <UserAvatar user={user} />
+                    <UserAvatar />
                 </>
             ) : (
                 <>
-                    <UserAvatar user={user} />
+                    <UserAvatar />
                     <SigninButton />
                 </>
             )}

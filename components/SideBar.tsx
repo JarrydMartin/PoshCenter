@@ -3,7 +3,7 @@ import React, { Dispatch } from "react";
 import { ArticleMode } from "../lib/enums";
 import { ArticleModel } from "../lib/models";
 import ArticleIndexAside from "./ArticleIndexAside";
-import EditArticleAside from "./EditSideBar";
+import EditArticleAside from "./EditArticleAside";
 
 const SideBar = ({
   articleMode,

@@ -2,14 +2,17 @@ import { Button } from "@material-ui/core";
 import React, { useContext } from "react";
 import { UserContext } from "../lib/contexts";
 import { auth, googleAuthProvider } from "../lib/firebase";
-import { useUser } from "../lib/hooks";
 
-const AuthButton = ({isSignedIn}:{isSignedIn:boolean}) => {
+const AuthButton = () => {
+  const {isSignedIn } = useContext(UserContext);
+
   return <div>{isSignedIn ? <SignOutButton /> : <SignInButton />}</div>;
 };
 
 // Sign in with Google button
 function SignInButton() {
+
+
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider);
   };
@@ -23,7 +26,7 @@ function SignInButton() {
 
 // Sign out button
 function SignOutButton() {
-  return <Button onClick={() => auth.signOut()}>Sign Out</Button>;
+  return <Button onClick={async () => await auth.signOut() }>Sign Out</Button>;
 }
 
 export default AuthButton;

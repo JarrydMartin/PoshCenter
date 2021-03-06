@@ -1,8 +1,6 @@
 import {
-    Button,
     Card,
     CardActionArea,
-    CardActions,
     CardContent,
     CardMedia,
     makeStyles,
@@ -52,8 +50,8 @@ const ArticleCard = ({ article }: { article: ArticleModel }) => {
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
-        minWidth: 345,
+        maxWidth: 400,
+        minWidth: 200,
         margin: "16px",
     },
     bullet: {

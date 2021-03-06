@@ -6,12 +6,11 @@ import { auth } from "../../../../lib/firebase";
 import { ArticleModel } from "../../../../lib/models";
 import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import NavBarAsEditor from "../../../../components/EditNavBar";
-import EditSideBar from "../../../../components/EditSideBar";
 import { ArticleMode } from "../../../../lib/enums";
 import SideBar from "../../../../components/SideBar";
-import { useUser, useUserData } from "../../../../lib/hooks";
 import { useRouter } from "next/router";
 import { UserContext } from "../../../../lib/contexts";
+
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
     ssr: false,
@@ -32,7 +31,7 @@ const Article = ({ articleJson }) => {
 
     let editorInstance = useRef<EditorJS>(null);
 
-    const { user, canEdit, isSignedIn } = useUser();
+    const { user } = useContext(UserContext);
 
     const [isOwner, setIseOwner] = useState<boolean>(false);
     const [article, setArticle] = useState<ArticleModel>(articleJson);
@@ -42,18 +41,13 @@ const Article = ({ articleJson }) => {
         if (user?.uid == pageuid) {
             setIseOwner(true);
         }
-        if (articleMode == ArticleMode.READ && isOwner) {
+        if ( articleMode == ArticleMode.READ && isOwner) {
             UpdateArticle(article);
         }
     }, [articleMode]);
 
     return (
-        <>
-            {isOwner ? (
                 <Layout
-                    user={user}
-                    canEdit={canEdit}
-                    isSignedIn={isSignedIn}
                     asideComponent={
                         <SideBar
                             article={article}
@@ -69,27 +63,16 @@ const Article = ({ articleJson }) => {
                             article={article}
                             setArticle={setArticle}
                             editorRef={editorInstance}
-                            user={user}
-                            canEdit={canEdit}
-                            isSignedIn={isSignedIn}
                         />
                     }>
                     <Editor
                         data={article}
                         editorInstance={editorInstance}
                         isReadOnly={articleMode == ArticleMode.READ}
+                        holder={article.articleId}
+                        key={article.articleId}
                     />
                 </Layout>
-            ) : (
-                <Layout user={user} canEdit={canEdit} isSignedIn={isSignedIn}>
-                    <Editor
-                        data={article}
-                        editorInstance={editorInstance}
-                        isReadOnly={true}
-                    />
-                </Layout>
-            )}
-        </>
     );
 };
 

@@ -32,3 +32,9 @@ export interface ArticleType{
     order: number
 }
 
+
+export interface UserData{
+    user: UserModel,
+    canEdit: boolean,
+    isSignedIn: boolean
+}

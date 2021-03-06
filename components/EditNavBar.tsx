@@ -11,18 +11,12 @@ const NavBarAsEditor = ({
   article,
   setArticle,
   editorRef,
-  user,
-  canEdit,
-  isSignedIn
 }: {
   articleMode: ArticleMode;
   setArticleMode?: Dispatch<React.SetStateAction<ArticleMode>>;
   article?: ArticleModel;
   setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
   editorRef?: MutableRefObject<EditorJS>;
-  user: UserModel;
-  canEdit: boolean;
-  isSignedIn: boolean;
 }) => {
 
   const handleEditClick = async (newArticelMode: ArticleMode) => {
@@ -65,7 +59,7 @@ const NavBarAsEditor = ({
   };
 
   return (
-    <NavBar user={user} canEdit={canEdit} isSignedIn={isSignedIn}>
+    <NavBar >
       <EditArticleButton />
     </NavBar>
   );

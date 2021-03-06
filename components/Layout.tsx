@@ -12,16 +12,10 @@ export function Layout({
     children,
     navComponent,
     asideComponent,
-    user,
-    canEdit,
-    isSignedIn,
 }: {
     children: any;
     asideComponent?: any;
     navComponent?: any;
-    user: UserModel;
-    canEdit: boolean;
-    isSignedIn: boolean;
 }) {
     return (
         <div className={layout.pageWrap}>
@@ -36,11 +30,7 @@ export function Layout({
                 {navComponent ? (
                     navComponent
                 ) : (
-                    <NavBar
-                        user={user}
-                        canEdit={canEdit}
-                        isSignedIn={isSignedIn}
-                    />
+                    <NavBar />
                 )}
             </nav>
             <main className={layout.pageMain}>{children}</main>

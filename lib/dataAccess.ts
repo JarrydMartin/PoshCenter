@@ -1,4 +1,4 @@
-import { firestore } from "./firebase";
+import { firestore, auth} from "./firebase";
 import { ArticleModel, ArticleType } from "./models";
 
 export async function GetArticle(UserId: string, articleSlug: string) {
@@ -30,6 +30,15 @@ export async function GetUserArticles(UserId: string) {
         console.log(error);
     }
     return data;
+}
+
+export async function DeleteUserArticle(UserId: string, articleSlug: string){
+    await firestore
+    .collection("users")
+    .doc(UserId)
+    .collection("articles")
+    .doc(articleSlug).delete();
+    
 }
 
 export async function GetPublishedArticlesByType(typeSlug: string) {
