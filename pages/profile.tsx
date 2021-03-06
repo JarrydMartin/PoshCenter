@@ -18,8 +18,6 @@ const profile = () => {
                 <h2>{user?.role}</h2>
                 <AuthButton />
             </div>
-
-            
         </Layout>
     )
 }

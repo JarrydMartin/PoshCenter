@@ -44,7 +44,7 @@ function Home() {
 
         const editorData = await editorInstance.current.save();
         const newArticle: ArticleModel = {
-          ...article,
+          ...article, 
           ...editorData
         }
 

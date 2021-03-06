@@ -17,7 +17,7 @@ const ArticleCard = ({ article }: { article: ArticleModel }) => {
 
     return (
         <Card className={classes.root}>
-            <Link href={`/user/${article.authorId}/article/${article.slug}`}>
+            <Link href={`/user/${article.authorId}/article/${article.articleId}`}>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
