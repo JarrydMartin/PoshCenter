@@ -19,14 +19,14 @@ const Editor = dynamic(() => import("../../../../components/Editor"), {
 });
 
 export async function getServerSideProps({ query }) {
-  const { uid, slug } = query;
+  const { uid, slug} = query;
   const articleJson = await GetArticle(uid, slug);
   return {
-    props: { articleJson, slug },
+    props: { articleJson},
   };
 }
 
-const Article = ({ articleJson, slug }) => {
+const Article = ({ articleJson }) => {
   let editorInstance = useRef<EditorJS>(null);
   const router = useRouter();
   const user = useContext(UserContext);
@@ -40,7 +40,7 @@ const Article = ({ articleJson, slug }) => {
       setIseOwner(true);
     }
     if (articleMode == ArticleMode.READ && isOwner) {
-      UpdateArticle(auth.currentUser.uid, slug, article);
+      UpdateArticle(article);
     }
   }, [articleMode]);
 

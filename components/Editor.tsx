@@ -25,6 +25,7 @@ const Editor = ({
       }}
       data={data}
       readOnly={isReadOnly}
+      placeholder={"Click here to start editing the article..."}
     />
   );
 };

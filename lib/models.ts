@@ -9,7 +9,7 @@ export interface ArticleModel{
     version?: string,
     authorId: string,
     author: string,
-    slug: string,
+    articleId: string,
     title: string,
     time?: number,
     blocks: OutputBlockData[],

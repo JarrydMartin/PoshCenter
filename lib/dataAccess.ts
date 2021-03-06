@@ -79,16 +79,14 @@ export async function GetPublishedUserArticles(UserId: string) {
 
 
 export async function UpdateArticle(
-    UserId: string,
-    articleSlug: string,
     article: ArticleModel
 ) {
     try {
         await firestore
             .collection("users")
-            .doc(UserId)
+            .doc(article.authorId)
             .collection("articles")
-            .doc(articleSlug)
+            .doc(article.articleId)
             .set(article);
     } catch (error) {
         console.log(error);
@@ -97,7 +95,6 @@ export async function UpdateArticle(
 
 export async function AddArticle(
     UserId: string,
-    articleSlug: string,
     article: ArticleModel
 ) {
     try {
@@ -105,8 +102,9 @@ export async function AddArticle(
             .collection("users")
             .doc(UserId)
             .collection("articles")
-            .doc(articleSlug);
-        await ref.set(article);
+        const newArticleRef =  await ref.add(article);
+        await UpdateArticle({...article, articleId:newArticleRef.id})
+        return newArticleRef.id;
     } catch (error) {
         console.log(error);
     }

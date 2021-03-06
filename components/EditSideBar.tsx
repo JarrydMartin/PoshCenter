@@ -28,7 +28,6 @@ const EditArticleAside = ({
 
   return (
     <div>
-      <h2>Article Properties</h2>
       <form noValidate autoComplete="off" className={classes.form}>
         <TextField
           id="title"

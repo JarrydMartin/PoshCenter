@@ -21,7 +21,7 @@ const SideBar = ({
       return <ArticleIndexAside />;
 
     case ArticleMode.EDIT:
-      return <EditArticleAside article={article} setArticle={setArticle}/>;
+      return  <> <h2>Article Properties</h2> <EditArticleAside article={article} setArticle={setArticle}/></>;
 
     default:
       return <ArticleIndexAside />;
