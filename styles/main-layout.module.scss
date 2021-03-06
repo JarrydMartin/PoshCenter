@@ -53,3 +53,8 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+div.codex-editor__redactor {
+  background-color: aquamarine !important;
+  padding-bottom: 20px !important;
+}

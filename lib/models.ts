@@ -29,7 +29,8 @@ export interface UserModel{
 export interface ArticleType{
     name: string,
     slug: string,
-    order: number
+    order: number,
+    blocks: OutputBlockData[],
 }
 
 

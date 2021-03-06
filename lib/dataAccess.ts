@@ -140,3 +140,18 @@ export async function GetArticleTypes() {
     }
     return [] as ArticleType[];
 }
+
+export async function GetArticleType(slug:string) {
+    try {
+            let data: ArticleType;
+            const userRef = firestore.collection("articleTypes").doc(slug);
+            const snapshot = await userRef.get();
+            data = snapshot.data() as ArticleType;
+            return data;
+        }
+        
+        catch (error) {
+        console.log(error);
+    };
+    return {}
+}

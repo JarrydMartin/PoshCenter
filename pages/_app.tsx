@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../lib/theme';
 import { UserContext } from '../lib/contexts';
 import { useUserData } from '../lib/hooks';
+import '../styles/globals.css'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

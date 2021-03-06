@@ -3,6 +3,7 @@ import EditorJs from "react-editor-js";
 import EditorJS, { OutputBlockData } from "@editorjs/editorjs";
 import { EDITOR_JS_TOOLS } from "../lib/constants";
 import { ArticleModel } from "../lib/models";
+import { makeStyles } from "@material-ui/core";
 
 const Editor = ({
   editorInstance,
@@ -17,6 +18,7 @@ const Editor = ({
   
 }) => {
   return (
+    <div>
     <EditorJs
       tools={EDITOR_JS_TOOLS}
       instanceRef={(instance) => {
@@ -27,7 +29,9 @@ const Editor = ({
       data={data}
       readOnly={isReadOnly}
       />
+    </div>
   );
 };
+
 
 export default Editor;
