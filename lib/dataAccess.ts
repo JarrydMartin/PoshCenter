@@ -155,3 +155,13 @@ export async function GetArticleType(slug:string) {
     };
     return {}
 }
+
+export async function UpdateArticleType(
+    article: ArticleType
+) {
+    try {
+        await firestore.collection("articleTypes").doc(article.slug).set(article);
+    } catch (error) {
+        console.log(error);
+    }
+}

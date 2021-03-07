@@ -1,13 +1,20 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
-import ArticleCard from '../../components/ArticleCard'
-import ArticleCardList from '../../components/ArticleCardList'
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import ArticleCard from "../../components/ArticleCard";
+import ArticleCardList from "../../components/ArticleCardList";
 
-import { Layout } from '../../components/Layout'
-import { GetArticleType, GetPublishedArticlesByType } from '../../lib/dataAccess'
+import { Layout } from "../../components/Layout";
+import {
+    GetArticleType,
+    GetPublishedArticlesByType,
+    UpdateArticleType,
+} from "../../lib/dataAccess";
 import EditorJS from "@editorjs/editorjs";
-import dynamic from 'next/dynamic'
-import { makeStyles } from '@material-ui/core'
+import dynamic from "next/dynamic";
+import { makeStyles } from "@material-ui/core";
+import NavBarAsEditor from "../../components/EditNavBar";
+import { ArticleMode, UserRoles } from "../../lib/enums";
+import { UserContext } from "../../lib/contexts";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -15,29 +22,64 @@ const Editor = dynamic(() => import("../../components/Editor"), {
 });
 
 const ArtcileHomePage = () => {
-    const router = useRouter()
-    const slug  = router.query["slug"] as string
+    const router = useRouter();
+    const slug = router.query["slug"] as string;
     const [articles, setArticles] = useState(null);
     const [homePage, setHomePage] = useState(null);
-    
+    const [articleMode, setArticleMode] = useState(ArticleMode.READ);
+    const { user } = useContext(UserContext);
+
     let editorInstance = useRef<EditorJS>(null);
 
-    async function getPublishedTypedArticles(){
-        const homePage = await GetArticleType(slug)
+    async function getPublishedTypedArticles() {
+        const homePage = await GetArticleType(slug);
         setHomePage(homePage);
-        const articles = await GetPublishedArticlesByType(slug)
-        setArticles(articles)
+        const articles = await GetPublishedArticlesByType(slug);
+        console.log(homePage)
+        setArticles(articles);
     }
 
     useEffect(() => {
-        getPublishedTypedArticles()
-    }, [router])
-    return (
-        <Layout >
-            {homePage && <Editor data={homePage} editorInstance={editorInstance}/> }
-            {articles&& <ArticleCardList articles={articles} />}
-        </Layout>
-    )
-}
+        getPublishedTypedArticles();
+    }, [router.query]);
 
-export default ArtcileHomePage
+    useEffect(() => { 
+        if (articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN) {
+            console.log("updaing articleType")
+            UpdateArticleType(homePage);
+        }
+    }, [articleMode]);
+    return (
+        <>
+            {user.role == UserRoles.ADMIN ? (
+                <Layout
+                    navComponent={
+                        <NavBarAsEditor
+                            editorRef={editorInstance}
+                            articleMode={articleMode}
+                            setArticleMode={setArticleMode}
+                            article={homePage}
+                            setArticle={setHomePage}
+                        />
+                    }>
+                    {homePage && (
+                        <Editor
+                            data={homePage}
+                            editorInstance={editorInstance}
+                            isReadOnly={articleMode == ArticleMode.READ}
+                            holder={slug}
+                        />
+                    )}
+                    {articles && <ArticleCardList articles={articles} />}
+                </Layout>
+            ) : (
+                <Layout>
+                    {homePage && <Editor data={homePage} isReadOnly={true} />}
+                    {articles && <ArticleCardList articles={articles} />}
+                </Layout>
+            )}
+        </>
+    );
+};
+
+export default ArtcileHomePage;
