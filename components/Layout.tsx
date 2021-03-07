@@ -37,7 +37,7 @@ export function Layout({
             <aside className={layout.pageSidebar}>
                 <>{asideComponent ? asideComponent : <SideBar />}</>
             </aside>
-            <footer className={layout.pageFooter}>Footer</footer>
+            <footer className={layout.pageFooter}><small>Contact jarryd.martin@worksafe.govt.nz for any techincal issues</small></footer>
         </div>
     );
 }
