@@ -39,7 +39,6 @@ const ArtcileHomePage = () => {
         setArticles(articles);
     }
     
-
     useEffect(() => {
         getPublishedTypedArticles();
         setREfreshEditor(false);
