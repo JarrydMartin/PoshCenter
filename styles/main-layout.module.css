@@ -30,7 +30,7 @@
 }
 
 .pageHeader {
-  grid-column: 1 / -1;
+  grid-column: 2 / -1;
 }
 
 .pageSidebar {
@@ -88,4 +88,9 @@
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
+}
+
+div.codex-editor__redactor {
+  background-color: aquamarine !important;
+  padding-bottom: 20px !important;
 }
