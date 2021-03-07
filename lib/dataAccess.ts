@@ -129,7 +129,7 @@ export async function AddArticleType(articleType: ArticleType) {
 export async function GetArticleTypes() {
     try {
         let data: ArticleType[] = [];
-        const userRef = firestore.collection("articleTypes");
+        const userRef = firestore.collection("articleTypes").where("slug", "!=", "home");
         const snapshot = await userRef.get();
         snapshot.forEach((doc) => {
             data.push(doc.data() as ArticleType);
