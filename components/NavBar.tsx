@@ -23,14 +23,6 @@ const NavBar = ({ children }: { children?: any }) => {
         );
     };
 
-    const SigninButton = () => {
-        return (
-            <Button className="btn-google" onClick={signInWithGoogle}>
-                Sign in
-            </Button>
-        );
-    };
-
     return (
         <div className={classes.root}>
             {isSignedIn ? (
@@ -42,7 +34,6 @@ const NavBar = ({ children }: { children?: any }) => {
             ) : (
                 <>
                     <UserAvatar />
-                    <SigninButton />
                 </>
             )}
         </div>

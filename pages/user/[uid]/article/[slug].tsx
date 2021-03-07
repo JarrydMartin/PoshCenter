@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../../../components/Layout";
-import { auth } from "../../../../lib/firebase";
 import { ArticleModel } from "../../../../lib/models";
 import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import NavBarAsEditor from "../../../../components/EditNavBar";
@@ -10,7 +9,6 @@ import { ArticleMode } from "../../../../lib/enums";
 import SideBar from "../../../../components/SideBar";
 import { useRouter } from "next/router";
 import { UserContext } from "../../../../lib/contexts";
-
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
     ssr: false,

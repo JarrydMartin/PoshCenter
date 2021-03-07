@@ -28,24 +28,23 @@ const ArtcileHomePage = () => {
     const [homePage, setHomePage] = useState(null);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
     const { user } = useContext(UserContext);
-
+    const [refreshEditor, setREfreshEditor] = useState(true);
     let editorInstance = useRef<EditorJS>(null);
 
     async function getPublishedTypedArticles() {
         const homePage = await GetArticleType(slug);
         setHomePage(homePage);
         const articles = await GetPublishedArticlesByType(slug);
-        console.log(homePage)
         setArticles(articles);
     }
 
     useEffect(() => {
         getPublishedTypedArticles();
-    }, [router.query]);
+        setREfreshEditor(false);
+    }, [router]);
 
     useEffect(() => { 
         if (articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN) {
-            console.log("updaing articleType")
             UpdateArticleType(homePage);
         }
     }, [articleMode]);
@@ -68,6 +67,7 @@ const ArtcileHomePage = () => {
                             editorInstance={editorInstance}
                             isReadOnly={articleMode == ArticleMode.READ}
                             holder={slug}
+                            reInitialize={true}
                         />
                     )}
                     {articles && <ArticleCardList articles={articles} />}

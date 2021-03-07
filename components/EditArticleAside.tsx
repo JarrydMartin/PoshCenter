@@ -115,9 +115,6 @@ const EditArticleAside = ({
                 
             </form>
             <Button
-                    variant="outlined"
-                    color="secondary"
-                    className="del-article"
                     onClick={deleteArticle}>
                     Delete
             </Button>

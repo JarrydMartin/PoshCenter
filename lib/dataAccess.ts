@@ -141,6 +141,10 @@ export async function GetArticleTypes() {
     return [] as ArticleType[];
 }
 
+export async function HasUserHearted(articleId:string, uid:string){
+
+}
+
 export async function GetArticleType(slug:string) {
     try {
             let data: ArticleType;

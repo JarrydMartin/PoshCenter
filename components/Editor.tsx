@@ -10,7 +10,7 @@ const Editor = ({
   data,
   isReadOnly,
   holder = "customer",
-  reInitialize= true
+  reInitialize= false
 }: {
   editorInstance?: React.MutableRefObject<EditorJS>;
   data: ArticleModel;

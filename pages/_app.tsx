@@ -22,6 +22,7 @@ export default function MyApp(props) {
 
   return (
     <React.Fragment>
+      <React.StrictMode>
       <Head>
         <title>Health and Safety Net</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -33,6 +34,7 @@ export default function MyApp(props) {
         <Component {...pageProps} />
         </UserContext.Provider>
       </ThemeProvider>
+      </React.StrictMode>
     </React.Fragment>
   );
 }

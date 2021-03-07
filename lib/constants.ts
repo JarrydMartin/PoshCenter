@@ -4,7 +4,6 @@ import List from '@editorjs/list'
 import Header from '@editorjs/header'
 import Quote from '@editorjs/quote'
 import Marker from '@editorjs/marker'
-import CheckList from '@editorjs/checklist'
 import Delimiter from '@editorjs/delimiter'
 import Image from '@editorjs/image'
 
@@ -17,17 +16,20 @@ export const EDITOR_JS_TOOLS = {
         class: List,
         inlineToolbar: true
     },
-    embed: Embed,
+    embed: {
+      class: Embed,
+      config: {
+        services: {
+          youtube: true
+        }
+      }
+    },
     table: Table,
     marker: Marker,
     quote: {
         class: Quote,
         inlineToolbar: true,
     },
-    checklist: {
-        class: CheckList,
-        inlineToolbar: true,
-      },
     delimiter: Delimiter,
     image: {
         class: Image,
