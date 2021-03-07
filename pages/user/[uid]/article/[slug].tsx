@@ -3,12 +3,13 @@ import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../../../components/Layout";
 import { ArticleModel } from "../../../../lib/models";
-import { GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
+import { DeleteUserArticle, GetArticle, UpdateArticle } from "../../../../lib/dataAccess";
 import NavBarAsEditor from "../../../../components/EditNavBar";
 import { ArticleMode } from "../../../../lib/enums";
 import SideBar from "../../../../components/SideBar";
 import { useRouter } from "next/router";
 import { UserContext } from "../../../../lib/contexts";
+import { Button } from "@material-ui/core";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), {
     ssr: false,
@@ -35,6 +36,12 @@ const Article = ({ articleJson }) => {
     const [article, setArticle] = useState<ArticleModel>(articleJson);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
 
+    const deleteArticle = async () => {
+        await DeleteUserArticle(user.uid, article.articleId);
+        router.push("/profile");
+    };
+    
+
     useEffect(() => {
         if (user?.uid == pageuid) {
             setIseOwner(true);
@@ -47,12 +54,18 @@ const Article = ({ articleJson }) => {
     return (
                 <Layout
                     asideComponent={
+                        <>
                         <SideBar
                             article={article}
                             setArticle={setArticle}
                             articleMode={articleMode}
                             setArticleMode={setArticleMode}
                         />
+                        { (articleMode != ArticleMode.READ) && <Button
+                        onClick={deleteArticle}>
+                        Delete
+                </Button>}
+                </>
                     }
                     navComponent={
                         <NavBarAsEditor

@@ -5,6 +5,7 @@ import ArticleCardList from "../../components/ArticleCardList";
 
 import { Layout } from "../../components/Layout";
 import {
+    DeleteUserArticle,
     GetArticleType,
     GetPublishedArticlesByType,
     UpdateArticleType,
@@ -37,6 +38,7 @@ const ArtcileHomePage = () => {
         const articles = await GetPublishedArticlesByType(slug);
         setArticles(articles);
     }
+    
 
     useEffect(() => {
         getPublishedTypedArticles();

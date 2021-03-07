@@ -36,11 +36,6 @@ const EditArticleAside = ({
         setArticleTypes(data);
     };
 
-    const deleteArticle = async () => {
-        await DeleteUserArticle(user.uid, article.articleId);
-        router.push("/profile");
-    };
-
     useEffect(() => {
         getArticleTypes();
     }, []);
@@ -114,10 +109,6 @@ const EditArticleAside = ({
                 <ImageUploader user={user} />
                 
             </form>
-            <Button
-                    onClick={deleteArticle}>
-                    Delete
-            </Button>
         </div>
     );
 };
