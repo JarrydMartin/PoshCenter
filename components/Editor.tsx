@@ -31,7 +31,7 @@ const Editor = ({
       data={data}
       readOnly={isReadOnly}
       holder={holder}
-      enableReInitialize={true}
+      enableReInitialize={reInitialize}
       >
         <div id={holder}/>
         </EditorJs>
