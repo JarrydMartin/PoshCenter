@@ -53,13 +53,12 @@ function Home() {
                             data={homePage}
                             editorInstance={editorInstance}
                             isReadOnly={articleMode == ArticleMode.READ}
-                            reInitialize={true}
                         />
                     )}
                 </Layout>
             ) : (
                 <Layout>
-                    {homePage && <Editor data={homePage} isReadOnly={true} />}
+                    {homePage && <Editor  editorInstance={editorInstance} data={homePage} isReadOnly={true} />}
                 </Layout>
             )}
         </>

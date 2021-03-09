@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core";
 import NavBarAsEditor from "../../components/EditNavBar";
 import { ArticleMode, UserRoles } from "../../lib/enums";
 import { UserContext } from "../../lib/contexts";
+import { ArticleType } from "../../lib/models";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -49,6 +50,16 @@ const ArtcileHomePage = () => {
             router.reload();
         }
     }, [articleMode]);
+
+    const HandleSave = async () => {
+        // UpdateArticleType(homePage);
+        // router.reload();
+        const editorData = await editorInstance.current.save();
+        const newHomePage:ArticleType = { ...homePage, ...editorData }
+        setHomePage(newHomePage);
+        UpdateArticleType(newHomePage);
+        console.log("SAVE")
+    }
   
     return (
                 <Layout
@@ -59,6 +70,7 @@ const ArtcileHomePage = () => {
                             setArticleMode={setArticleMode}
                             article={homePage}
                             setArticle={setHomePage}
+                            onSave={HandleSave}
                         />
                     }>
                     {homePage && (

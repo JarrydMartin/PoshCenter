@@ -11,18 +11,21 @@ const NavBarAsEditor = ({
   article,
   setArticle,
   editorRef,
+  onSave,
 }: {
   articleMode: ArticleMode;
   setArticleMode?: Dispatch<React.SetStateAction<ArticleMode>>;
   article?: ArticleModel;
   setArticle?: Dispatch<React.SetStateAction<ArticleModel>>;
   editorRef?: MutableRefObject<EditorJS>;
+  onSave?: () => void;
 }) => {
 
   const handleEditClick = async (newArticelMode: ArticleMode) => {
     if (articleMode == ArticleMode.EDIT) {
       const editorData = await editorRef.current.save();
       setArticle({ ...article, ...editorData });
+      onSave();
     }
     setArticleMode(newArticelMode);
   };
