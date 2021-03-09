@@ -29,8 +29,8 @@ const ArtcileHomePage = () => {
     const [homePage, setHomePage] = useState(null);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
     const { user } = useContext(UserContext);
-    const [refreshEditor, setREfreshEditor] = useState(true);
     let editorInstance = useRef<EditorJS>(null);
+    const CanEdit = articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN;
 
     async function getPublishedTypedArticles() {
         const homePage = await GetArticleType(slug);
@@ -41,17 +41,16 @@ const ArtcileHomePage = () => {
     
     useEffect(() => {
         getPublishedTypedArticles();
-        setREfreshEditor(false);
     }, [router]);
 
-    useEffect(() => { 
-        if (articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN) {
+    useEffect(() => {
+        if (CanEdit) {
             UpdateArticleType(homePage);
+            router.reload();
         }
     }, [articleMode]);
+  
     return (
-        <>
-            {user.role == UserRoles.ADMIN ? (
                 <Layout
                     navComponent={
                         <NavBarAsEditor
@@ -66,20 +65,13 @@ const ArtcileHomePage = () => {
                         <Editor
                             data={homePage}
                             editorInstance={editorInstance}
-                            isReadOnly={articleMode == ArticleMode.READ}
+                            isReadOnly={CanEdit}
                             holder={slug}
-                            reInitialize={true}
+                            enableReInitialize={articleMode == ArticleMode.READ}
                         />
                     )}
                     {articles && <ArticleCardList articles={articles} />}
                 </Layout>
-            ) : (
-                <Layout>
-                    {homePage && <Editor data={homePage} isReadOnly={true} />}
-                    {articles && <ArticleCardList articles={articles} />}
-                </Layout>
-            )}
-        </>
     );
 };
 

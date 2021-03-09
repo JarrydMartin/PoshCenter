@@ -80,8 +80,6 @@ const Article = ({ articleJson }) => {
                         data={article}
                         editorInstance={editorInstance}
                         isReadOnly={articleMode == ArticleMode.READ}
-                        holder={article.articleId}
-                        key={article.articleId}
                     />
                 </Layout>
     );

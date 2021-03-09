@@ -6,38 +6,34 @@ import { ArticleModel } from "../lib/models";
 import { makeStyles } from "@material-ui/core";
 
 const Editor = ({
-  editorInstance,
-  data,
-  isReadOnly,
-  holder = "customer",
-  reInitialize
+    editorInstance,
+    data,
+    isReadOnly,
+    enableReInitialize,
+    holder = "customer",
 }: {
-  editorInstance?: React.MutableRefObject<EditorJS>;
-  data: ArticleModel;
-  isReadOnly?: boolean;
-  holder?: string;
-  reInitialize?: boolean;
+    editorInstance: React.MutableRefObject<EditorJS>;
+    data: ArticleModel;
+    isReadOnly?: boolean;
+    enableReInitialize?:boolean
+    holder?: string;
 }) => {
-
-  return (
-    <div>
-    <EditorJs
-      tools={EDITOR_JS_TOOLS}
-      instanceRef={(instance) => {
-        if (editorInstance) {
-          editorInstance.current = instance;
-        }
-      }}
-      data={data}
-      readOnly={isReadOnly}
-      holder={holder}
-      enableReInitialize={reInitialize}
-      >
-        <div id={holder}/>
-        </EditorJs>
-    </div>
-  );
+    return (
+        <div>
+            <EditorJs
+                tools={EDITOR_JS_TOOLS}
+                instanceRef={(instance) => {
+                    if (editorInstance) {
+                        editorInstance.current = instance;
+                    }
+                }}
+                enableReInitialize={enableReInitialize}
+                data={data}
+                readOnly={isReadOnly}
+                />
+               
+        </div>
+    );
 };
-
 
 export default Editor;
