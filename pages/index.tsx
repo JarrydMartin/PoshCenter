@@ -8,7 +8,7 @@ import { UserContext } from "../lib/contexts";
 import ArticleCardList from "../components/ArticleCardList";
 import NavBarAsEditor from "../components/EditNavBar";
 import dynamic from "next/dynamic";
-import { ArticleModel } from "../lib/models";
+import { ArticleModel, ArticleType } from "../lib/models";
 
 const Editor = dynamic(() => import("../components/Editor"), {
     ssr: false,
@@ -24,6 +24,12 @@ function Home() {
     async function getPublishedTypedArticles() {
         const homePage = await GetArticleType("home");
         setHomePage(homePage);
+    }
+
+    const handleOnSave = async () => {
+        const editorData = await editorInstance.current.save();
+        const newHomePage:ArticleType = { ...homePage, ...editorData }
+        setHomePage(newHomePage);
     }
 
     useEffect(() => {
@@ -46,6 +52,7 @@ function Home() {
                             setArticleMode={setArticleMode}
                             article={homePage}
                             setArticle={setHomePage}
+                            onSave={handleOnSave}
                         />
                     }>
                     {homePage && (
