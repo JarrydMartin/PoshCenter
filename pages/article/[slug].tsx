@@ -68,7 +68,7 @@ const ArtcileHomePage = () => {
                             editorInstance={editorInstance}
                             isReadOnly={articleMode == ArticleMode.READ}
                             holder={slug}
-                            reInitialize={false}
+                            reInitialize={true}
                         />
                     )}
                     {articles && <ArticleCardList articles={articles} />}
