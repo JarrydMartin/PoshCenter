@@ -44,13 +44,6 @@ const ArtcileHomePage = () => {
         getPublishedTypedArticles();
     }, [router]);
 
-    useEffect(() => {
-        if (CanEdit) {
-            UpdateArticleType(homePage);
-            router.reload();
-        }
-    }, [articleMode]);
-
     const HandleSave = async () => {
         // UpdateArticleType(homePage);
         // router.reload();
@@ -58,7 +51,6 @@ const ArtcileHomePage = () => {
         const newHomePage:ArticleType = { ...homePage, ...editorData }
         setHomePage(newHomePage);
         UpdateArticleType(newHomePage);
-        console.log("SAVE")
     }
   
     return (
