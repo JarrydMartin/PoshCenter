@@ -31,6 +31,8 @@ export interface ArticleType{
     slug: string,
     order: number,
     blocks: OutputBlockData[],
+    time: number,
+    version?: string,
 }
 
 

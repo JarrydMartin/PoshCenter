@@ -5,10 +5,11 @@ import { GetArticleType, UpdateArticleType } from "../lib/dataAccess";
 import { ArticleMode, UserRoles } from "../lib/enums";
 import { UserContext } from "../lib/contexts";
 
-import ArticleCardList from "../components/ArticleCardList";
-import NavBarAsEditor from "../components/EditNavBar";
 import dynamic from "next/dynamic";
 import { ArticleModel, ArticleType } from "../lib/models";
+import NavBar from "../components/NavBar";
+import EditSaveButton from "../components/EditSaveButton";
+import AuthCheck from "../components/AuthCheck";
 
 const Editor = dynamic(() => import("../components/Editor"), {
     ssr: false,
@@ -28,47 +29,38 @@ function Home() {
 
     const handleOnSave = async () => {
         const editorData = await editorInstance.current.save();
-        const newHomePage:ArticleType = { ...homePage, ...editorData }
+        const newHomePage: ArticleType = { ...homePage, ...editorData };
+
         setHomePage(newHomePage);
-    }
+        UpdateArticleType(newHomePage);
+        setArticleMode(ArticleMode.READ);
+    };
 
     useEffect(() => {
         getPublishedTypedArticles();
     }, []);
 
-    useEffect(() => {
-        if (articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN) {
-            UpdateArticleType(homePage);
-        }
-    }, [articleMode]);
     return (
-        <>
-            {user.role == UserRoles.ADMIN ? (
-                <Layout
-                    navComponent={
-                        <NavBarAsEditor
-                            editorRef={editorInstance}
-                            articleMode={articleMode}
-                            setArticleMode={setArticleMode}
-                            article={homePage}
-                            setArticle={setHomePage}
+        <Layout
+            navComponent={
+                <NavBar>
+                    <AuthCheck roleAccess={UserRoles.ADMIN}>
+                        <EditSaveButton
+                            name={"Home Page"}
                             onSave={handleOnSave}
+                            onEdit={() => setArticleMode(ArticleMode.EDIT)}
                         />
-                    }>
-                    {homePage && (
-                        <Editor
-                            data={homePage}
-                            editorInstance={editorInstance}
-                            isReadOnly={articleMode == ArticleMode.READ}
-                        />
-                    )}
-                </Layout>
-            ) : (
-                <Layout>
-                    {homePage && <Editor  editorInstance={editorInstance} data={homePage} isReadOnly={true} />}
-                </Layout>
+                    </AuthCheck>
+                </NavBar>
+            }>
+            {homePage && (
+                <Editor
+                    data={homePage}
+                    editorInstance={editorInstance}
+                    isReadOnly={articleMode == ArticleMode.READ}
+                />
             )}
-        </>
+        </Layout>
     );
 }
 export default Home;

@@ -17,6 +17,6 @@ export default function AuthCheck({
     if (user && (user.role == UserRoles.ADMIN || roleAccess == UserRoles.READER ||user.role == roleAccess)) {
         return children;
     } else {
-        return fallback || <p>You must be signed</p>;
+        return fallback || <></>;
     }
 }

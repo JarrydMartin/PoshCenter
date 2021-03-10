@@ -7,11 +7,7 @@ import UserAvatar from "./Avitar";
 
 const NavBar = ({ children }: { children?: any }) => {
     const classes = useStyles();
-    const { canEdit, isSignedIn } = useContext(UserContext);
-
-    const signInWithGoogle = async () => {
-        await auth.signInWithPopup(googleAuthProvider);
-    };
+    const { canEdit } = useContext(UserContext);
 
     const NewArticleButton = () => {
         return (
@@ -25,17 +21,9 @@ const NavBar = ({ children }: { children?: any }) => {
 
     return (
         <div className={classes.root}>
-            {isSignedIn ? (
-                <>
-                    {canEdit && <NewArticleButton />}
-                    {children}
-                    <UserAvatar />
-                </>
-            ) : (
-                <>
-                    <UserAvatar />
-                </>
-            )}
+            {canEdit && <NewArticleButton />}
+            {children}
+            <UserAvatar />
         </div>
     );
 };

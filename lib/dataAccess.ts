@@ -157,7 +157,7 @@ export async function GetArticleType(slug:string) {
         catch (error) {
         console.log(error);
     };
-    return {}
+    return {} as ArticleType
 }
 
 export async function UpdateArticleType(
