@@ -34,7 +34,6 @@
 }
 
 .pageSidebar {
-  background-image: url("../public/seigaiha.png");
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / 2;
