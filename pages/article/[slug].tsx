@@ -37,9 +37,7 @@ const ArtcileHomePage = () => {
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
     const { user } = useContext(UserContext);
     let editorInstance = useRef<EditorJS>(null);
-    const CanEdit =
-        articleMode == ArticleMode.READ && user.role == UserRoles.ADMIN;
-
+   
     async function getPublishedTypedArticles() {
         const homePage = await GetArticleType(slug);
         setHomePage(homePage);
@@ -79,7 +77,7 @@ const ArtcileHomePage = () => {
                 <Editor
                     data={homePage}
                     editorInstance={editorInstance}
-                    isReadOnly={CanEdit}
+                    isReadOnly={articleMode == ArticleMode.READ}
                     holder={slug}
                 />
             )}
