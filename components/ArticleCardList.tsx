@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     root: {
       display: "flex",
       alignItems: "center",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      justifyContent: "center"
     },
   });
 

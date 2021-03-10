@@ -35,7 +35,7 @@ const ArtcileHomePage = () => {
     };
     const [homePage, setHomePage] = useState<ArticleType>(defaultHome);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
-    const { user } = useContext(UserContext);
+
     let editorInstance = useRef<EditorJS>(null);
    
     async function getPublishedTypedArticles() {
@@ -50,7 +50,6 @@ const ArtcileHomePage = () => {
         setHomePage(null);
         setArticles(null);
         getPublishedTypedArticles();
-        console.log("hello");
     }, [router]);
 
     const handleOnSave = async () => {

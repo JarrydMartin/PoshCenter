@@ -1,5 +1,4 @@
 .pageWrap {
-  background: white;
   height: calc(100vh - 10px);
   display: -ms-grid;
   display: grid;
@@ -8,7 +7,6 @@
   -ms-grid-rows: min-content min-content 1fr min-content;
       grid-template-rows: -webkit-min-content -webkit-min-content 1fr -webkit-min-content;
       grid-template-rows: min-content min-content 1fr min-content;
-  gap: 1px;
 }
 
 .pageWrap > * {
@@ -16,7 +14,7 @@
   text-align: center;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .pageWrap {
     -ms-grid-columns: 100%;
         grid-template-columns: 100%;
@@ -30,10 +28,13 @@
 }
 
 .pageHeader {
-  grid-column: 2 / -1;
+  background-image: url("../public/canadian-dollar.png");
+  grid-column: 1 / -1;
+  text-align: left;
 }
 
 .pageSidebar {
+  background-image: url("../public/seigaiha.png");
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-column: 1 / 2;
