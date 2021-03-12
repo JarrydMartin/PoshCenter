@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { ArticleModel } from "../../lib/models";
 import {
-    DeleteUserArticle,
+    DeleteArticle,
     GetArticle,
     UpdateArticle,
 } from "../../lib/dataAccess";
@@ -42,7 +42,7 @@ const Article = ({ articleJson }) => {
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
 
     const deleteArticle = async () => {
-        await DeleteUserArticle(user.uid, article.articleId);
+        await DeleteArticle(article.articleId);
         router.push("/profile");
     };
 
