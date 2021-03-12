@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { userInfo } from "node:os";
 import React, { Dispatch, useContext, useEffect, useState } from "react";
 import { UserContext } from "../lib/contexts";
-import { DeleteUserArticle, GetArticleTypes } from "../lib/dataAccess";
+import { GetArticleTypes } from "../lib/dataAccess";
 import { UserRoles } from "../lib/enums";
 import { ArticleModel, ArticleType, UserModel } from "../lib/models";
 import ImageUploader from "./ImgaeUploader";
