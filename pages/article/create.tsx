@@ -49,10 +49,10 @@ function Home() {
             ...editorData,
         };
 
-        const articleId = await AddArticle(auth.currentUser.uid, newArticle);
+        const articleId = await AddArticle(newArticle);
 
         articleId &&
-            router.push(`/user/${auth.currentUser.uid}/article/${articleId}`);
+            router.push(`/article/${articleId}`);
     };
 
     return (
