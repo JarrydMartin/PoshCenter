@@ -16,7 +16,8 @@ export interface ArticleModel{
     published: boolean,
     articleTypeSlug: string,
     heroImg: string,
-    heroDescription: string
+    heroDescription: string,
+    editors?: string[]
 }
 
 export interface UserModel{

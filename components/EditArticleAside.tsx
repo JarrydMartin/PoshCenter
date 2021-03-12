@@ -17,6 +17,7 @@ import { UserContext } from "../lib/contexts";
 import { DeleteUserArticle, GetArticleTypes } from "../lib/dataAccess";
 import { ArticleModel, ArticleType, UserModel } from "../lib/models";
 import ImageUploader from "./ImgaeUploader";
+import MultiEdtorSelect from "./MultiEdtorSelect";
 
 const EditArticleAside = ({
     article,
@@ -106,6 +107,7 @@ const EditArticleAside = ({
                     }
                     label="Published"
                 />
+                 <MultiEdtorSelect />
                 <ImageUploader user={user} />
                 
             </form>
