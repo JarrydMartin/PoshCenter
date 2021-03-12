@@ -1,30 +1,30 @@
 import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Layout } from "../../../../components/Layout";
-import { ArticleModel } from "../../../../lib/models";
+import { Layout } from "../../components/Layout";
+import { ArticleModel } from "../../lib/models";
 import {
     DeleteUserArticle,
     GetArticle,
     UpdateArticle,
-} from "../../../../lib/dataAccess";
-import { ArticleMode, UserRoles } from "../../../../lib/enums";
-import SideBar from "../../../../components/SideBar";
+} from "../../lib/dataAccess";
+import { ArticleMode, UserRoles } from "../../lib/enums";
+import SideBar from "../../components/SideBar";
 import { useRouter } from "next/router";
-import { UserContext } from "../../../../lib/contexts";
+import { UserContext } from "../../lib/contexts";
 import { Button } from "@material-ui/core";
-import NavBar from "../../../../components/NavBar";
-import AuthCheck from "../../../../components/AuthCheck";
-import EditSaveButton from "../../../../components/EditSaveButton";
+import NavBar from "../../components/NavBar";
+import AuthCheck from "../../components/AuthCheck";
+import EditSaveButton from "../../components/EditSaveButton";
 
-const Editor = dynamic(() => import("../../../../components/Editor"), {
+const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
     loading: () => <p>loading editor.js ...</p>,
 });
 
 export async function getServerSideProps({ query }) {
-    const { uid, slug } = query;
-    const articleJson = await GetArticle(uid, slug);
+    const { id } = query;
+    const articleJson = await GetArticle(id);
     return {
         props: { articleJson },
     };

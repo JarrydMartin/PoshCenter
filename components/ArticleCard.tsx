@@ -14,7 +14,7 @@ const ArticleCard = ({ article }: { article: ArticleModel }) => {
     const classes = useStyles();
 
     return (
-        <Link href={`/user/${article.authorId}/article/${article.articleId}`}>
+        <Link href={`/article/${article.articleId}`}>
         <Card className={classes.root}>
            
                 <CardActionArea>

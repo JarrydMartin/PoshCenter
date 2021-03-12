@@ -1,4 +1,4 @@
-import Article from "../pages/user/[uid]/article/[slug]";
+import Article from "../pages/article/[id]";
 import { ArticleMode } from "./enums";
 import { firestore, auth} from "./firebase";
 import { ArticleModel, ArticleType } from "./models";

@@ -20,7 +20,7 @@ const Editor = dynamic(() => import("../components/Editor"), {
     loading: () => <p>loading editor.js ...</p>,
 });
 
-const ArtcileHomePage = () => {
+const ArtcilePage = () => {
     const router = useRouter();
     const slug = router.query["slug"] as string;
 
@@ -78,4 +78,4 @@ const ArtcileHomePage = () => {
     );
 };
 
-export default ArtcileHomePage;
+export default ArtcilePage;
