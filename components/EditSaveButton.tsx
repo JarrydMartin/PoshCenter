@@ -16,7 +16,7 @@ const EditSaveButton = ({
         <>
             {isEdit ? (
                 <Button
-                    color="primary"
+                    color="secondary"
                     type="button"
                     onClick={() => {
                         setIsEdit(!isEdit);
@@ -26,7 +26,7 @@ const EditSaveButton = ({
                 </Button>
             ) : (
                 <Button
-                    color="primary"
+                color="secondary"
                     type="button"
                     onClick={() => {
                         setIsEdit(!isEdit);

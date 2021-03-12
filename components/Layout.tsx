@@ -26,6 +26,8 @@ export function Layout({
                     </a>
                 </Link>
             </header>
+           
+            <main className={layout.pageMain}>{children}</main>
             <nav className={layout.pageNav}>
                 {navComponent ? (
                     navComponent
@@ -33,7 +35,6 @@ export function Layout({
                     <NavBar />
                 )}
             </nav>
-            <main className={layout.pageMain}>{children}</main>
             <aside className={layout.pageSidebar}>
                 <>{asideComponent ? asideComponent : <SideBar />}</>
             </aside>

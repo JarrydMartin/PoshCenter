@@ -23,6 +23,7 @@
 .pageHeader {
   background-image: url("../public/canadian-dollar.png");
   grid-column: 1 / -1;
+  grid-row: 1 / 2;
   text-align: left;
 }
 
@@ -32,6 +33,7 @@
 }
 .pageNav {
   grid-column: 2 / 3;
+  grid-row: 1 / 2;
 }
 .pageMain {
   grid-column: 2 / 3;
