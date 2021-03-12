@@ -3,7 +3,7 @@ import ArticleCardList from '../components/ArticleCardList'
 import AuthButton from '../components/AuthButton'
 import { Layout } from '../components/Layout'
 import { UserContext } from '../lib/contexts'
-import { GetUserArticles } from '../lib/dataAccess'
+import { GetUserArticles, refacArticles } from '../lib/dataAccess'
 import { ArticleModel } from '../lib/models'
 
 const profile = () => {
@@ -29,6 +29,7 @@ const profile = () => {
                 <h2>{user.role}</h2>
                 <AuthButton />
                 {articles && <ArticleCardList articles={articles} />}
+                <button onClick={() => refacArticles()}>refrac articles</button>
             </div>
         </Layout>
     )

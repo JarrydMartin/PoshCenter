@@ -1,13 +1,22 @@
+import Article from "../pages/user/[uid]/article/[slug]";
+import { ArticleMode } from "./enums";
 import { firestore, auth} from "./firebase";
 import { ArticleModel, ArticleType } from "./models";
 
-export async function GetArticle(UserId: string, articleSlug: string) {
+
+/**
+ * GetArticle
+ * 
+ * Get an article by its Id
+ * 
+ * @param articleId 
+ * @returns ArtilceModel
+ */
+export async function GetArticle(articleId: string) {
     try {
         const articleRef = firestore
-            .collection("users")
-            .doc(UserId)
             .collection("articles")
-            .doc(articleSlug);
+            .doc(articleId);
         const doc = await articleRef.get();
         return doc.data();
     } catch (error) {
@@ -15,6 +24,30 @@ export async function GetArticle(UserId: string, articleSlug: string) {
     }
     return {}
 }
+
+/**
+ * AddArticle
+ * 
+ * Addes an article to the database
+ * 
+ * @param article new artilce to be added
+ * @returns new article Id 
+ */
+ export async function AddArticle(
+    article: ArticleModel
+) {
+    try {
+        const ref = firestore
+            .collection("articles")
+        const newArticleRef =  await ref.add(article);
+        await UpdateArticle({...article, articleId: newArticleRef.id})
+        return newArticleRef.id;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export async function GetUserArticles(UserId: string) {
   let data: any[] = [];
     try {  
@@ -40,6 +73,33 @@ export async function DeleteUserArticle(UserId: string, articleSlug: string){
     .doc(articleSlug).delete();
     
 }
+
+export async function GetArticles(){
+    let data: any[] = [];
+    try {
+        const articleRef = firestore
+            .collectionGroup("articles");
+
+        const snapshot = await articleRef.get();
+        snapshot.forEach((doc) => {
+            data.push(doc.data());
+        });
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+    return data;
+
+}
+
+
+
+export async function refacArticles() {
+    const articles:ArticleModel[] = await GetArticles();
+
+    articles.forEach(article => AddArticle(article));
+}
+
 
 export async function GetPublishedArticlesByType(typeSlug: string) {
   let data: any[] = [];
@@ -99,7 +159,7 @@ export async function UpdateArticle(
     }
 }
 
-export async function AddArticle(
+export async function AddArticleOld(
     UserId: string,
     article: ArticleModel
 ) {
@@ -168,4 +228,19 @@ export async function UpdateArticleType(
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function GetArticleOld(UserId: string, articleSlug: string) {
+    try {
+        const articleRef = firestore
+            .collection("users")
+            .doc(UserId)
+            .collection("articles")
+            .doc(articleSlug);
+        const doc = await articleRef.get();
+        return doc.data();
+    } catch (error) {
+        console.log(error);
+    }
+    return {}
 }
