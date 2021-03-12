@@ -15,9 +15,25 @@ import { userInfo } from "node:os";
 import React, { Dispatch, useContext, useEffect, useState } from "react";
 import { UserContext } from "../lib/contexts";
 import { DeleteUserArticle, GetArticleTypes } from "../lib/dataAccess";
+import { UserRoles } from "../lib/enums";
 import { ArticleModel, ArticleType, UserModel } from "../lib/models";
 import ImageUploader from "./ImgaeUploader";
-import MultiEdtorSelect from "./MultiEdtorSelect";
+import MultiEdtorSelect from "./MultiEditorSelect";
+
+const editorDefault: UserModel[] = [
+    {
+        name: "Jarryd Martin",
+        uid: "1",
+        profileImage: "",
+        role: UserRoles.ADMIN
+    },
+    {
+        name: "Rob Cousins",
+        uid: "2",
+        profileImage: "",
+        role: UserRoles.ADMIN
+    }
+  ];
 
 const EditArticleAside = ({
     article,
@@ -28,6 +44,8 @@ const EditArticleAside = ({
 }) => {
     const classes = useStyles();
     const [articleTypes, setArticleTypes] = useState<ArticleType[]>([]);
+    const [editors, setEditors] = useState<UserModel[]>([]);
+
     const router = useRouter();
 
     const { user } = useContext(UserContext);
@@ -107,7 +125,7 @@ const EditArticleAside = ({
                     }
                     label="Published"
                 />
-                 <MultiEdtorSelect />
+                 <MultiEdtorSelect selectPool={editorDefault} selected={editors} setSelected={setEditors} />
                 <ImageUploader user={user} />
                 
             </form>
