@@ -9,7 +9,7 @@ const UserAvatar = () => {
     return (
         <Link href={`/profile`}>
             <a>
-                <Avatar alt={user.name} src={user.profileImage}  />
+                <Avatar variant="rounded" alt={user.name} src={user.profileImage}  />
             </a>
         </Link>
     );

@@ -12,7 +12,7 @@ const NavBar = ({ children }: { children?: any }) => {
     const NewArticleButton = () => {
         return (
             <Link href="/article/create">
-                <Button color="primary" type="button">
+                <Button color="secondary" type="button">
                     New Article
                 </Button>
             </Link>
@@ -32,9 +32,10 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         justifyContent: "flex-end",
-        alignItems: "center",
+        alignItems: "flex-end",
+        fontWeight: "bold",
         "& > *": {
-            margin: "4px",
+            margin: "16px",
         },
         "& > p": {
             fontSize: "18px",
