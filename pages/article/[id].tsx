@@ -39,6 +39,7 @@ const Article = ({ articleJson }) => {
 
     const [article, setArticle] = useState<ArticleModel>(articleJson);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
+    const [likes, setLikes] = useState( articleJson.likes.length);
 
     const deleteArticle = async () => {
         await DeleteArticle(article.articleId);
@@ -55,6 +56,7 @@ const Article = ({ articleJson }) => {
     };
 
     const updateLikes = () => {
+        setLikes(article.likes.length);
         UpdateArticle(article);
     }
 
@@ -98,7 +100,7 @@ const Article = ({ articleJson }) => {
                 />
                 <HeartButton
                     userLiked={article.likes.includes(user.uid)}
-                    likes={article.likes.length}
+                    likes={likes}
                     onLiked={() => {
                         article.likes.push(user.uid);
                         updateLikes();
