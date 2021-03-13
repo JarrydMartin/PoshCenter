@@ -38,7 +38,7 @@ const HeartButton = ({
                     )}
                     
                 </IconButton>
-                +{likes}  
+                +{likes} 
                 {showSignIn && <p>signin to like</p>}
                 
             </div>
