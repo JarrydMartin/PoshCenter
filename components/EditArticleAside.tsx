@@ -41,7 +41,7 @@ const EditArticleAside = ({
         setArticleTypes(articleTypeData);
 
         const editorUserData = await GetEditors();
-        setEditorPool(editorUserData);
+        setEditorPool(editorUserData.filter(editor => article.authorId != editor.uid));
 
         setEditors(
             editorUserData.filter((editor) =>

@@ -98,13 +98,13 @@ export async function DeleteArticle(articleId: string) {
  * Get all articles
  */
 export async function GetArticles() {
-    let data: any[] = [];
+    let data: ArticleModel[] = [];
     try {
         const articleRef = firestore.collection("articles");
 
         const snapshot = await articleRef.get();
         snapshot.forEach((doc) => {
-            data.push(doc.data());
+            data.push(doc.data() as ArticleModel);
         });
     } catch (error) {
         console.log(error.message);

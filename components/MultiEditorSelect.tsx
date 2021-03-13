@@ -27,7 +27,6 @@ const MultiEditorSelect = ({
     selectPool,
     selected,
     setSelected,
-    onChange,
 }: {
     selectPool: UserModel[];
     selected:  UserModel[];
