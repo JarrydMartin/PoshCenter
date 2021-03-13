@@ -12,11 +12,12 @@ import { ArticleMode, UserRoles } from "../../lib/enums";
 import SideBar from "../../components/SideBar";
 import { useRouter } from "next/router";
 import { UserContext } from "../../lib/contexts";
-import { Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import NavBar from "../../components/NavBar";
 import AuthCheck from "../../components/AuthCheck";
 import EditSaveButton from "../../components/EditSaveButton";
 import { EDITOR_ROLES } from "../../lib/userConstants";
+import HeartButton from "../../components/HeartButton";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -33,6 +34,7 @@ export async function getServerSideProps({ query }) {
 
 const Article = ({ articleJson }) => {
     const router = useRouter();
+    const classes = useStyles();
     // const pageuid = router.query["uid"] as string;
 
     let editorInstance = useRef<EditorJS>(null);
@@ -84,13 +86,26 @@ const Article = ({ articleJson }) => {
                     }
                 </NavBar>
             }>
+                <div className={classes.root}>
+            
             <Editor
                 data={article}
                 editorInstance={editorInstance}
                 isReadOnly={articleMode == ArticleMode.READ}
             />
+            <HeartButton value={5} />
+            </div>
         </Layout>
     );
 };
+
+const useStyles = makeStyles({
+    root: {
+        display: "flex",
+        alignItems: "flex-start",
+        alignContent:"flex-start",
+        justifyContent: "center"
+    },
+});
 
 export default Article;
