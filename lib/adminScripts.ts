@@ -9,6 +9,6 @@ export const ADMIN_updateArticles = async () => {
 
     artciles.forEach((article) => {
         console.log(`Updating ${article.articleId}....`);
-        UpdateArticle({ ...article, editors: [] });
+        UpdateArticle({ ...article, likes: [] });
     });
 };

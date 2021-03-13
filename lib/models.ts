@@ -17,7 +17,8 @@ export interface ArticleModel{
     articleTypeSlug: string,
     heroImg: string,
     heroDescription: string,
-    editors?: string[]
+    editors: string[]
+    likes:string[]
 }
 
 export interface UserModel{
