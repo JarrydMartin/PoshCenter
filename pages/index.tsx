@@ -44,7 +44,7 @@ function Home() {
         <Layout
             navComponent={
                 <NavBar>
-                    <AuthCheck roleAccess={UserRoles.ADMIN}>
+                    <AuthCheck roleAccess={[UserRoles.ADMIN]} >
                         <EditSaveButton
                             name={"Home Page"}
                             onSave={handleOnSave}

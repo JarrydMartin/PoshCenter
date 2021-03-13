@@ -55,7 +55,7 @@ const ArtcilePage = () => {
         <Layout
             navComponent={
                 <NavBar>
-                    <AuthCheck roleAccess={UserRoles.ADMIN}>
+                    <AuthCheck roleAccess={[UserRoles.ADMIN]}>
                         <EditSaveButton
                             name={"Page"}
                             onSave={handleOnSave}

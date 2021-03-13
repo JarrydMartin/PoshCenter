@@ -16,6 +16,7 @@ import { Button } from "@material-ui/core";
 import NavBar from "../../components/NavBar";
 import AuthCheck from "../../components/AuthCheck";
 import EditSaveButton from "../../components/EditSaveButton";
+import { EDITOR_ROLES } from "../../lib/userConstants";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -72,13 +73,15 @@ const Article = ({ articleJson }) => {
             }
             navComponent={
                 <NavBar>
-                    <AuthCheck roleAccess={UserRoles.EDITOR}>
-                        <EditSaveButton
-                            name={"Article"}
-                            onSave={handleOnSave}
-                            onEdit={() => setArticleMode(ArticleMode.EDIT)}
-                        />
-                    </AuthCheck>
+                    {article &&
+                        <AuthCheck roleAccess={EDITOR_ROLES}  userAccess={article.editors.concat(article.authorId)}>
+                            <EditSaveButton
+                                name={"Article"}
+                                onSave={handleOnSave}
+                                onEdit={() => setArticleMode(ArticleMode.EDIT)}
+                            />
+                        </AuthCheck>
+                    }
                 </NavBar>
             }>
             <Editor

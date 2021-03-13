@@ -11,6 +11,7 @@ import { UserRoles } from "../../lib/enums";
 import EditArticleAside from "../../components/EditArticleAside";
 import { ArticleModel } from "../../lib/models";
 import { UserContext } from "../../lib/contexts";
+import { EDITOR_ROLES } from "../../lib/userConstants";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -58,7 +59,7 @@ function Home() {
     return (
         <Layout
             asideComponent={
-                <AuthCheck roleAccess={UserRoles.EDITOR}>
+                <AuthCheck roleAccess={EDITOR_ROLES}>
                     <>
                         <h2>Create Article</h2>
                         {article && (
@@ -78,7 +79,7 @@ function Home() {
                     </>
                 </AuthCheck>
             }>
-            <AuthCheck roleAccess={UserRoles.EDITOR}>
+            <AuthCheck roleAccess={EDITOR_ROLES}>
                 <Editor editorInstance={editorInstance} data={article} />
             </AuthCheck>
         </Layout>
