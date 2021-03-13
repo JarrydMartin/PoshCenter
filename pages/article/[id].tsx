@@ -12,7 +12,7 @@ import { Button, makeStyles } from "@material-ui/core";
 import NavBar from "../../components/NavBar";
 import AuthCheck from "../../components/AuthCheck";
 import EditSaveButton from "../../components/EditSaveButton";
-import { EDITOR_ROLES } from "../../lib/userConstants";
+import { EDITOR_ROLES, READER_ROLES } from "../../lib/userConstants";
 import HeartButton from "../../components/HeartButton";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
@@ -98,19 +98,20 @@ const Article = ({ articleJson }) => {
                     editorInstance={editorInstance}
                     isReadOnly={articleMode == ArticleMode.READ}
                 />
-                <HeartButton
-                    userLiked={article.likes.includes(user.uid)}
-                    likes={likes}
-                    onLiked={() => {
-                        article.likes.push(user.uid);
-                        updateLikes();
-                    }}
-                    onUnliked={() => {
-                        article.likes = article.likes.filter(
-                            (like) => like != user.uid
-                        );
-                        updateLikes();
-                    }}
+                    <HeartButton
+                        userLiked={article.likes.includes(user.uid)}
+                        likes={likes}
+                        onLiked={() => {
+                            article.likes.push(user.uid);
+                            updateLikes();
+                        }}
+                        onUnliked={() => {
+                            article.likes = article.likes.filter(
+                                (like) => like != user.uid
+                            );
+                            updateLikes();
+                        }}
+                        readOnly={user.role == UserRoles.ANON}
                 />
             </div>
         </Layout>
