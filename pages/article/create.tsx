@@ -36,6 +36,8 @@ function Home() {
                 heroImg: "",
                 published: false,
                 title: "",
+                editors:[],
+                likes:[]
             };
             setArticle(defaultArticle);
         }

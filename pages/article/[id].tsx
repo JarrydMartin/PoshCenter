@@ -3,11 +3,7 @@ import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { ArticleModel } from "../../lib/models";
-import {
-    DeleteArticle,
-    GetArticle,
-    UpdateArticle,
-} from "../../lib/dataAccess";
+import { DeleteArticle, GetArticle, UpdateArticle } from "../../lib/dataAccess";
 import { ArticleMode, UserRoles } from "../../lib/enums";
 import SideBar from "../../components/SideBar";
 import { useRouter } from "next/router";
@@ -58,6 +54,10 @@ const Article = ({ articleJson }) => {
         setArticleMode(ArticleMode.READ);
     };
 
+    const updateLikes = () => {
+        UpdateArticle(article);
+    }
+
     return (
         <Layout
             asideComponent={
@@ -75,25 +75,41 @@ const Article = ({ articleJson }) => {
             }
             navComponent={
                 <NavBar>
-                    {article &&
-                        <AuthCheck roleAccess={EDITOR_ROLES}  userAccess={article.editors.concat(article.authorId)}>
+                    {article && (
+                        <AuthCheck
+                            roleAccess={EDITOR_ROLES}
+                            userAccess={article.editors.concat(
+                                article.authorId
+                            )}>
                             <EditSaveButton
                                 name={"Article"}
                                 onSave={handleOnSave}
                                 onEdit={() => setArticleMode(ArticleMode.EDIT)}
                             />
                         </AuthCheck>
-                    }
+                    )}
                 </NavBar>
             }>
-                <div className={classes.root}>
-            
-            <Editor
-                data={article}
-                editorInstance={editorInstance}
-                isReadOnly={articleMode == ArticleMode.READ}
-            />
-            <HeartButton value={5} />
+            <div className={classes.root}>
+                <Editor
+                    data={article}
+                    editorInstance={editorInstance}
+                    isReadOnly={articleMode == ArticleMode.READ}
+                />
+                <HeartButton
+                    userLiked={article.likes.includes(user.uid)}
+                    likes={article.likes.length}
+                    onLiked={() => {
+                        article.likes.push(user.uid);
+                        updateLikes();
+                    }}
+                    onUnliked={() => {
+                        article.likes = article.likes.filter(
+                            (like) => like != user.uid
+                        );
+                        updateLikes();
+                    }}
+                />
             </div>
         </Layout>
     );
@@ -103,8 +119,8 @@ const useStyles = makeStyles({
     root: {
         display: "flex",
         alignItems: "flex-start",
-        alignContent:"flex-start",
-        justifyContent: "center"
+        alignContent: "flex-start",
+        justifyContent: "center",
     },
 });
 

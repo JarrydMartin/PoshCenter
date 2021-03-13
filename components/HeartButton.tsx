@@ -4,24 +4,20 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React, { useState } from "react";
 
 const HeartButton = ({
-    value,
+    userLiked,
+    likes,
     onLiked,
     onUnliked,
 }: {
-    value: number;
-    onLiked?: () => void;
-    onUnliked?: () => void;
+    userLiked: boolean
+    likes: number;
+    onLiked: () => void;
+    onUnliked: () => void;
 }) => {
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(userLiked);
 
     const toggleLiked = () => {
-        liked
-            ? onUnliked
-                ? onUnliked()
-                : () => {}
-            : onLiked
-            ? onLiked()
-            : () => {};
+        liked ?  onUnliked() : onLiked();
 
         setLiked(!liked);
     };
@@ -35,7 +31,7 @@ const HeartButton = ({
                     )}
                     
                 </IconButton>
-                +{value}
+                +{likes}
             </div>
             
       
