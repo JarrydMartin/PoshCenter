@@ -14,26 +14,11 @@ import { useRouter } from "next/router";
 import { userInfo } from "node:os";
 import React, { Dispatch, useContext, useEffect, useState } from "react";
 import { UserContext } from "../lib/contexts";
-import { GetArticleTypes } from "../lib/dataAccess";
+import { GetArticleTypes, GetEditors } from "../lib/dataAccess";
 import { UserRoles } from "../lib/enums";
 import { ArticleModel, ArticleType, UserModel } from "../lib/models";
 import ImageUploader from "./ImgaeUploader";
 import MultiEdtorSelect from "./MultiEditorSelect";
-
-const editorDefault: UserModel[] = [
-    {
-        name: "Jarryd Martin",
-        uid: "1",
-        profileImage: "",
-        role: UserRoles.ADMIN
-    },
-    {
-        name: "Rob Cousins",
-        uid: "2",
-        profileImage: "",
-        role: UserRoles.ADMIN
-    }
-  ];
 
 const EditArticleAside = ({
     article,
@@ -45,23 +30,40 @@ const EditArticleAside = ({
     const classes = useStyles();
     const [articleTypes, setArticleTypes] = useState<ArticleType[]>([]);
     const [editors, setEditors] = useState<UserModel[]>([]);
+    const [editorPool, setEditorPool] = useState<UserModel[]>([]);
 
     const router = useRouter();
 
     const { user } = useContext(UserContext);
 
-    const getArticleTypes = async () => {
-        const data = await GetArticleTypes();
-        setArticleTypes(data);
+    const getData = async () => {
+        const articleTypeData = await GetArticleTypes();
+        setArticleTypes(articleTypeData);
+
+        const editorUserData = await GetEditors();
+        setEditorPool(editorUserData);
+
+        setEditors(
+            editorUserData.filter((editor) =>
+                article.editors?.includes(editor.uid)
+            )
+        );
     };
 
     useEffect(() => {
-        getArticleTypes();
+        getData();
     }, []);
+
+    useEffect(() => {
+        setArticle({
+            ...article,
+            editors: editors.map((e) => e.uid),
+        });
+    }, [editors])
 
     return (
         <div className={classes.root}>
-            <form noValidate autoComplete="off" className={classes.form} >
+            <form noValidate autoComplete="off" className={classes.form}>
                 <TextField
                     id="title"
                     label="Title"
@@ -125,9 +127,12 @@ const EditArticleAside = ({
                     }
                     label="Published"
                 />
-                 <MultiEdtorSelect selectPool={editorDefault} selected={editors} setSelected={setEditors} />
+                <MultiEdtorSelect
+                    selectPool={editorPool}
+                    selected={editors}
+                    setSelected={setEditors}
+                />
                 <ImageUploader user={user} />
-                
             </form>
         </div>
     );
@@ -139,17 +144,17 @@ const useStyles = makeStyles(() =>
             display: "flex",
             flexDirection: "column",
             "& > form": {
-              paddingBottom: "160px",
-          },
+                paddingBottom: "160px",
+            },
         },
         form: {
-          display: "flex",
-          flexDirection: "column",
-          alignContenttent: "flexStart",
-          "& > *": {
-              paddingBottom: "24px",
-          },
-      },
+            display: "flex",
+            flexDirection: "column",
+            alignContenttent: "flexStart",
+            "& > *": {
+                paddingBottom: "24px",
+            },
+        },
     })
 );
 

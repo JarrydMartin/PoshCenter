@@ -1,28 +1,29 @@
-import Embed from '@editorjs/embed'
-import Table from '@editorjs/table'
-import List from '@editorjs/list'
-import Header from '@editorjs/header'
-import Quote from '@editorjs/quote'
-import Marker from '@editorjs/marker'
-import Delimiter from '@editorjs/delimiter'
-import Image from '@editorjs/image'
+import Embed from "@editorjs/embed";
+import Table from "@editorjs/table";
+import List from "@editorjs/list";
+import Header from "@editorjs/header";
+import Quote from "@editorjs/quote";
+import Marker from "@editorjs/marker";
+import Delimiter from "@editorjs/delimiter";
+import Image from "@editorjs/image";
+import { UserRoles } from "./enums";
 
 export const EDITOR_JS_TOOLS = {
     header: {
         class: Header,
-        inlineToolbar: true
+        inlineToolbar: true,
     },
     list: {
         class: List,
-        inlineToolbar: true
+        inlineToolbar: true,
     },
     embed: {
-      class: Embed,
-      config: {
-        services: {
-          youtube: true
-        }
-      }
+        class: Embed,
+        config: {
+            services: {
+                youtube: true,
+            },
+        },
     },
     table: Table,
     marker: Marker,
@@ -34,9 +35,11 @@ export const EDITOR_JS_TOOLS = {
     image: {
         class: Image,
         config: {
-          endpoints: {
-            byUrl: '/api/img', // Your endpoint that provides uploading by Url
-          }
-        }
-    }
-}
+            endpoints: {
+                byUrl: "/api/img", // Your endpoint that provides uploading by Url
+            },
+        },
+    },
+};
+
+// 

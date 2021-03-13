@@ -27,10 +27,12 @@ const MultiEditorSelect = ({
     selectPool,
     selected,
     setSelected,
+    onChange,
 }: {
     selectPool: UserModel[];
     selected:  UserModel[];
     setSelected: React.Dispatch<React.SetStateAction<UserModel[]>>;
+    onChange?: () => void;
 }) => {
     const classes = useStyles();
 

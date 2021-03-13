@@ -14,7 +14,6 @@ const ArticleIndexAside = () => {
   
     setArticleTypes(
       data
-        .sort((a, b) => (a.order > b.order ? 1 : -1))
         .map((a) => (
           <ArticleTypeItem key={a.slug} to={`/${a.slug}`} primary={a.name}  isSelected={a.slug === slug} />
         ))
