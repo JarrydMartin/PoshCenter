@@ -4,6 +4,7 @@ import { UserContext } from "../lib/contexts";
 import { storage, STATE_CHANGED } from "../lib/firebase";
 import { UserModel } from "../lib/models";
 import Loader from "./Loader";
+import BackupIcon from '@material-ui/icons/Backup';
 
 // Uploads images to Firebase Storage
 export default function ImageUploader({user}:{user:UserModel}) {
@@ -15,7 +16,8 @@ export default function ImageUploader({user}:{user:UserModel}) {
     const uploadFile = async (e) => {
         // Get the file
         const file = Array.from(e.target.files)[0] as any;
-        const extension = file.type.split("/")[1];
+        const fileSplit : string[] = file.name.split(".")
+        const extension = fileSplit[fileSplit.length - 1];
 
         // Makes reference to the storage bucket location
         const ref = storage.ref(
@@ -36,7 +38,7 @@ export default function ImageUploader({user}:{user:UserModel}) {
 
             // Get downloadURL AFTER task resolves (Note: this is not a native Promise)
             task.then((d) => ref.getDownloadURL()).then((url) => {
-                setDownloadURL(url);
+                setDownloadURL(`${url}.${extension}`);
                 setUploading(false);
             });
         });
@@ -47,28 +49,30 @@ export default function ImageUploader({user}:{user:UserModel}) {
             <Loader show={uploading} />
             {uploading && <h3>{progress}%</h3>}
 
-            {!uploading && (
-                <>
-                    <Button component="label">
-                        📸 Upload Img
-                        <input
-                            type="file"
-                            hidden
-                            onChange={uploadFile}
-                            accept="image/x-png,image/gif,image/jpeg"
-                        />
-                    </Button>
-                </>
-            )}
-
             {downloadURL && (
                 <TextField
                     id="image-copy-paste"
                     label="Copy and Paste"
                     multiline
-                    value={`${downloadURL}.png`}
+                    value={`${downloadURL}`}
                 />
             )}
+
+            {!uploading && (
+                <>
+                    <Button component="label">
+                        <BackupIcon color="primary"/>
+                            <input
+                                type="file"
+                                hidden
+                                onChange={uploadFile}
+                            />
+                            &nbsp; Upload File
+                    </Button>
+                </>
+            )}
+
+           
         </>
     );
 }

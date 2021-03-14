@@ -249,6 +249,39 @@ export async function GetEditors() {
     return data;
 }
 
+// #################### likes ######################
+
+export async function GetLikes(articleId: string){
+    let data: string[] = [];
+    try {
+        const articleRef = firestore.collection("articles").doc(articleId);
+
+        const snapshot = await articleRef.collection("likes").get();
+
+        snapshot.forEach((doc) => {
+            data.push(doc.id as string);
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+    return data;
+}
+
+export async function AddLike(articleId: string, userId:string){
+    try {
+        const ref = firestore.collection("articles").doc(articleId).collection("likes").doc(userId);
+        await ref.set({userId: userId});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export async function DeleteLike(articleId: string, userId:string) {
+    await firestore.collection("articles").doc(articleId).collection("likes").doc(userId).delete();
+}
+
+
+
 export async function HasUserHearted(articleId: string, uid: string) {}
 
 // export async function GetArticleOld(UserId: string, articleSlug: string) {
