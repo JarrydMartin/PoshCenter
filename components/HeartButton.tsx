@@ -29,16 +29,17 @@ const HeartButton = ({
         }
     };
     return (
-            <div style={{fontSize:"20px"}}>
+            <div style={{fontSize:"20px"}} >
+                
                 <IconButton aria-label="Favorite" onClick={toggleLiked}>
                     {liked ? (
                         <FavoriteIcon color="primary"/>
                     ) : (
                         <FavoriteBorderIcon color="primary" />
                     )}
-                    
+                    <span> +{likes} </span>
                 </IconButton>
-                +{likes} 
+                
                 {showSignIn && <p>signin to like</p>}
                 
             </div>
