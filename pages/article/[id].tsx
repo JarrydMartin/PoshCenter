@@ -130,7 +130,8 @@ const useStyles = makeStyles({
         alignItems: "flex-start",
         alignContent: "flex-start",
         justifyContent: "center",
-    },
+        
+    }
 });
 
 export default Article;
