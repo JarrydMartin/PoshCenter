@@ -22,7 +22,7 @@ export function Layout({
             <header className={layout.pageHeader}>
                 <Link href="/">
                     <a style={{ color: "inherit", textDecoration: "inherit" }}>
-                        <h1>Health and Safety Network</h1>
+                        <h1>Health &amp; Safety Net</h1>
                     </a>
                 </Link>
             </header>
