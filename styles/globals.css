@@ -82,6 +82,9 @@ h3.ce-header {
         -ms-flex-pack: center;
             justify-content: center;
   }
+  .Mui-selected {
+    background-color: #12d3cf !important;
+  }
 }
 
 a {
