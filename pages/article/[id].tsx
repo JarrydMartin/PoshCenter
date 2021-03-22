@@ -3,7 +3,14 @@ import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../components/Layout";
 import { ArticleModel } from "../../lib/models";
-import { DeleteArticle, GetArticle, UpdateArticle, GetLikes, AddLike, DeleteLike } from "../../lib/dataAccess";
+import {
+    DeleteArticle,
+    GetArticle,
+    UpdateArticle,
+    GetLikes,
+    AddLike,
+    DeleteLike,
+} from "../../lib/dataAccess";
 import { ArticleMode, UserRoles } from "../../lib/enums";
 import SideBar from "../../components/SideBar";
 import { useRouter } from "next/router";
@@ -15,6 +22,7 @@ import EditSaveButton from "../../components/EditSaveButton";
 import { EDITOR_ROLES, READER_ROLES } from "../../lib/userConstants";
 import HeartButton from "../../components/HeartButton";
 import { Add } from "@material-ui/icons";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -33,6 +41,8 @@ const Article = ({ articleJson }) => {
     const router = useRouter();
     const classes = useStyles();
 
+    const isBigScreen = useMediaQuery("(min-width:800px)");
+
     let editorInstance = useRef<EditorJS>(null);
 
     const { user } = useContext(UserContext);
@@ -41,7 +51,7 @@ const Article = ({ articleJson }) => {
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
 
     const [likes, setLikes] = useState<string[]>(null);
-    const [likeCount, setLikeCount] = useState(0)
+    const [likeCount, setLikeCount] = useState(0);
 
     const deleteArticle = async () => {
         await DeleteArticle(article.articleId);
@@ -61,10 +71,10 @@ const Article = ({ articleJson }) => {
         const fecthingData = async () => {
             const likeData = await GetLikes(article.articleId);
             setLikes(likeData);
-            setLikeCount(likeData.length)
-        }
+            setLikeCount(likeData.length);
+        };
         fecthingData();
-    }, [])
+    }, []);
 
     return (
         <Layout
@@ -98,40 +108,71 @@ const Article = ({ articleJson }) => {
                     )}
                 </NavBar>
             }>
-            <div className={classes.root}>
-                <Editor
-                    data={article}
-                    editorInstance={editorInstance}
-                    isReadOnly={articleMode == ArticleMode.READ}
-                />
-                { likes &&
-                    <HeartButton
-                        userLiked={likes.includes(user.uid)}
-                        likes={likeCount}
-                        onLiked={() => {
-                            AddLike(article.articleId, user.uid);
-                            setLikeCount(likeCount + 1);
-                        }}
-                        onUnliked={() => {
-                            DeleteLike(article.articleId, user.uid);
-                            setLikeCount(likeCount - 1);
-                        }}
-                        readOnly={user.role == UserRoles.ANON}
-                />
-                    }
-            </div>
+            {isBigScreen ? (
+                <div className={classes.rootLarge}>
+                    <Editor
+                        data={article}
+                        editorInstance={editorInstance}
+                        isReadOnly={articleMode == ArticleMode.READ}
+                    />
+                    {likes && (
+                        <HeartButton
+                            userLiked={likes.includes(user.uid)}
+                            likes={likeCount}
+                            onLiked={() => {
+                                AddLike(article.articleId, user.uid);
+                                setLikeCount(likeCount + 1);
+                            }}
+                            onUnliked={() => {
+                                DeleteLike(article.articleId, user.uid);
+                                setLikeCount(likeCount - 1);
+                            }}
+                            readOnly={user.role == UserRoles.ANON}
+                        />
+                    )}
+                </div>
+            ) : (
+                <div className={classes.rootSmall}>
+                    <Editor
+                        data={article}
+                        editorInstance={editorInstance}
+                        isReadOnly={articleMode == ArticleMode.READ}
+                    />
+                    {likes && (
+                        <HeartButton
+                            userLiked={likes.includes(user.uid)}
+                            likes={likeCount}
+                            onLiked={() => {
+                                AddLike(article.articleId, user.uid);
+                                setLikeCount(likeCount + 1);
+                            }}
+                            onUnliked={() => {
+                                DeleteLike(article.articleId, user.uid);
+                                setLikeCount(likeCount - 1);
+                            }}
+                            readOnly={user.role == UserRoles.ANON}
+                        />
+                    )}
+                </div>
+            )}
         </Layout>
     );
 };
 
 const useStyles = makeStyles({
-    root: {
+    rootLarge: {
         display: "flex",
         alignItems: "flex-start",
         alignContent: "flex-start",
         justifyContent: "center",
-        
-    }
+    },
+    rootSmall: {
+        display: "flex",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
+        justifyContent: "center",
+        flexDirection: "column",
+    },
 });
 
 export default Article;
