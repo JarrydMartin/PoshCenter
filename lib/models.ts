@@ -17,10 +17,17 @@ export interface ArticleModel{
     articleTypeSlug: string,
     heroImg: string,
     heroDescription: string,
-    editors: string[]
-    likes:string[]
+    editors: string[],
+    likes:string[],
+    comments:CommentModel[]
 }
 
+export interface CommentModel{
+    commentId:string
+    text:string,
+    commenter: string,
+    order:number,
+}
 export interface UserModel{
     uid: string,
     name: string,

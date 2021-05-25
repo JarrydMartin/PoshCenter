@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import EditorJS from "@editorjs/editorjs";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Layout } from "../../components/Layout";
-import { ArticleModel } from "../../lib/models";
+import { ArticleModel, CommentModel } from "../../lib/models";
 import {
     DeleteArticle,
     GetArticle,
@@ -23,6 +23,7 @@ import { EDITOR_ROLES, READER_ROLES } from "../../lib/userConstants";
 import HeartButton from "../../components/HeartButton";
 import { Add } from "@material-ui/icons";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import CommentSection from "../../components/CommentSection";
 
 const Editor = dynamic(() => import("../../components/Editor"), {
     ssr: false,
@@ -37,7 +38,7 @@ export async function getServerSideProps({ query }) {
     };
 }
 
-const Article = ({ articleJson }) => {
+const Article = ({ articleJson }: { articleJson: ArticleModel }) => {
     const router = useRouter();
     const classes = useStyles();
 
@@ -49,6 +50,13 @@ const Article = ({ articleJson }) => {
 
     const [article, setArticle] = useState<ArticleModel>(articleJson);
     const [articleMode, setArticleMode] = useState(ArticleMode.READ);
+    const [comments, setComments] = useState(article.comments);
+    const newComment: CommentModel = {
+        commenter: "",
+        commentId: "",
+        order: 0,
+        text: "",
+    };
 
     const [likes, setLikes] = useState<string[]>(null);
     const [likeCount, setLikeCount] = useState(0);
@@ -65,6 +73,17 @@ const Article = ({ articleJson }) => {
         setArticle(newHomePage);
         UpdateArticle(newHomePage);
         setArticleMode(ArticleMode.READ);
+    };
+
+    const onCommentSave = (c: CommentModel) => {
+        const newC: CommentModel= {...c, commenter:user.name};
+        const newComments: CommentModel[] = article.comments
+            ? article.comments.concat(newC)
+            : [newC];
+        const newArticle: ArticleModel = { ...article, comments: newComments };
+        setArticle(newArticle);
+        setComments(newComments);
+        UpdateArticle(newArticle);
     };
 
     useEffect(() => {
@@ -108,67 +127,43 @@ const Article = ({ articleJson }) => {
                     )}
                 </NavBar>
             }>
-            {isBigScreen ? (
-                <div className={classes.rootLarge}>
-                    <Editor
-                        data={article}
-                        editorInstance={editorInstance}
-                        isReadOnly={articleMode == ArticleMode.READ}
+            <div className={classes.rootSmall}>
+                <Editor
+                    data={article}
+                    editorInstance={editorInstance}
+                    isReadOnly={articleMode == ArticleMode.READ}
+                />
+                {likes && (
+                    <HeartButton
+                        userLiked={likes.includes(user.uid)}
+                        likes={likeCount}
+                        onLiked={() => {
+                            AddLike(article.articleId, user.uid);
+                            setLikeCount(likeCount + 1);
+                        }}
+                        onUnliked={() => {
+                            DeleteLike(article.articleId, user.uid);
+                            setLikeCount(likeCount - 1);
+                        }}
+                        readOnly={user.role == UserRoles.ANON}
                     />
-                    {likes && (
-                        <HeartButton
-                            userLiked={likes.includes(user.uid)}
-                            likes={likeCount}
-                            onLiked={() => {
-                                AddLike(article.articleId, user.uid);
-                                setLikeCount(likeCount + 1);
-                            }}
-                            onUnliked={() => {
-                                DeleteLike(article.articleId, user.uid);
-                                setLikeCount(likeCount - 1);
-                            }}
-                            readOnly={user.role == UserRoles.ANON}
-                        />
-                    )}
-                </div>
-            ) : (
-                <div className={classes.rootSmall}>
-                    <Editor
-                        data={article}
-                        editorInstance={editorInstance}
-                        isReadOnly={articleMode == ArticleMode.READ}
+                )}
+                {article && (
+                    <CommentSection
+                        cs={comments}
+                        newC={newComment}
+                        onAdd={onCommentSave}
                     />
-                    {likes && (
-                        <HeartButton
-                            userLiked={likes.includes(user.uid)}
-                            likes={likeCount}
-                            onLiked={() => {
-                                AddLike(article.articleId, user.uid);
-                                setLikeCount(likeCount + 1);
-                            }}
-                            onUnliked={() => {
-                                DeleteLike(article.articleId, user.uid);
-                                setLikeCount(likeCount - 1);
-                            }}
-                            readOnly={user.role == UserRoles.ANON}
-                        />
-                    )}
-                </div>
-            )}
+                )}
+            </div>
         </Layout>
     );
 };
 
 const useStyles = makeStyles({
-    rootLarge: {
-        display: "flex",
-        alignItems: "flex-start",
-        alignContent: "flex-start",
-        justifyContent: "center",
-    },
     rootSmall: {
         display: "flex",
-        alignItems: "flex-start",
+        alignItems: "center",
         alignContent: "flex-start",
         justifyContent: "center",
         flexDirection: "column",

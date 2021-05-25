@@ -15,7 +15,7 @@ const Editor = ({
     editorInstance: React.MutableRefObject<EditorJS>;
     data: any;
     isReadOnly?: boolean;
-    enableReInitialize?:boolean
+    enableReInitialize?: boolean;
     holder?: string;
 }) => {
     return (
@@ -27,11 +27,12 @@ const Editor = ({
                         editorInstance.current = instance;
                     }
                 }}
+                holder={holder?holder:"default"}
                 enableReInitialize={enableReInitialize}
                 data={data}
-                readOnly={isReadOnly}
-                />
-               
+                readOnly={isReadOnly}>
+                <div id={holder?holder:"default"} />
+            </EditorJs>
         </div>
     );
 };

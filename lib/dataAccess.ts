@@ -2,7 +2,7 @@ import Article from "../pages/article/[id]";
 
 import { ArticleMode, UserRoles } from "./enums";
 import { firestore, auth } from "./firebase";
-import { ArticleModel, ArticleType, UserModel } from "./models";
+import { ArticleModel, ArticleType, CommentModel, UserModel } from "./models";
 import { EDITOR_ROLES } from "./userConstants";
 
 /**
@@ -177,10 +177,8 @@ export async function GetArticleTypes() {
         let data: ArticleType[] = [];
         const userRef = firestore
             .collection("articleTypes")
-            .orderBy("order", "asc")
-           
-            
-            
+            .orderBy("order", "asc");
+
         const snapshot = await userRef.get();
         snapshot.forEach((doc) => {
             data.push(doc.data() as ArticleType);
@@ -233,11 +231,21 @@ export async function GetUsers() {
     return data;
 }
 
+export async function GetUserById(uid: string) {
+    try {
+        const userSnap = await firestore.collection("users").doc(uid).get();
+        return <UserModel>userSnap.data();
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 export async function GetEditors() {
     let data: UserModel[] = [];
     try {
-        const articleRef = firestore.collection("users")
-        .where("role", "in", EDITOR_ROLES);
+        const articleRef = firestore
+            .collection("users")
+            .where("role", "in", EDITOR_ROLES);
 
         const snapshot = await articleRef.get();
         snapshot.forEach((doc) => {
@@ -251,7 +259,7 @@ export async function GetEditors() {
 
 // #################### likes ######################
 
-export async function GetLikes(articleId: string){
+export async function GetLikes(articleId: string) {
     let data: string[] = [];
     try {
         const articleRef = firestore.collection("articles").doc(articleId);
@@ -267,20 +275,27 @@ export async function GetLikes(articleId: string){
     return data;
 }
 
-export async function AddLike(articleId: string, userId:string){
+export async function AddLike(articleId: string, userId: string) {
     try {
-        const ref = firestore.collection("articles").doc(articleId).collection("likes").doc(userId);
-        await ref.set({userId: userId});
+        const ref = firestore
+            .collection("articles")
+            .doc(articleId)
+            .collection("likes")
+            .doc(userId);
+        await ref.set({ userId: userId });
     } catch (error) {
         console.log(error);
     }
 }
 
-export async function DeleteLike(articleId: string, userId:string) {
-    await firestore.collection("articles").doc(articleId).collection("likes").doc(userId).delete();
+export async function DeleteLike(articleId: string, userId: string) {
+    await firestore
+        .collection("articles")
+        .doc(articleId)
+        .collection("likes")
+        .doc(userId)
+        .delete();
 }
-
-
 
 export async function HasUserHearted(articleId: string, uid: string) {}
 

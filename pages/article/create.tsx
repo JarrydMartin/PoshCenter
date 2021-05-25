@@ -27,18 +27,21 @@ function Home() {
     useEffect(() => {
         if (user) {
             const defaultArticle: ArticleModel = {
-                articleTypeSlug: "",
-                articleId: "00000",
-                author: user.name,
-                authorId: user.uid,
-                blocks: [{"type":"paragraph","data":{"text":"Start typing here..."}}],
-                heroDescription: "",
-                heroImg: "",
-                published: false,
-                title: "",
-                editors:[],
-                likes:[]
-            };
+    articleTypeSlug: "",
+    articleId: "00000",
+    author: user.name,
+    authorId: user.uid,
+    blocks: [{ "type": "paragraph", "data": { "text": "Start typing here..." } }],
+    heroDescription: "",
+    heroImg: "",
+    published: false,
+    title: "",
+    editors: [],
+    likes: [],
+    version: 'todo',
+    time: 0,
+    comments: []
+};
             setArticle(defaultArticle);
         }
     }, [user]);
