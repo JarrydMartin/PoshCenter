@@ -32,7 +32,8 @@ export interface UserModel{
     uid: string,
     name: string,
     role: UserRoles,
-    profileImage: string
+    profileImage: string,
+    email: string
 }
 
 export interface ArticleType{

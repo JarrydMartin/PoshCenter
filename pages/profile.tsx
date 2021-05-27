@@ -1,6 +1,8 @@
+import { Button } from '@material-ui/core'
 import React, { useContext, useEffect, useState } from 'react'
 import ArticleCardList from '../components/ArticleCardList'
 import AuthButton from '../components/AuthButton'
+import EmailLinkSignIn from '../components/EmailLinkSignIn'
 import { Layout } from '../components/Layout'
 import { UserContext } from '../lib/contexts'
 import { GetArticlesByAuthorId } from '../lib/dataAccess'
@@ -20,7 +22,6 @@ const profile = () => {
     useEffect(() => {
         getArticles();
     }, [user])
-    
     return (
         <Layout>
             <div className="box-center">

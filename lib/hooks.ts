@@ -32,6 +32,7 @@ export function useUserData() {
                         uid: firebaseUser.uid,
                         profileImage: firebaseUser.photoURL,
                         role: UserRoles.READER,
+                        email: firebaseUser.email
                     };
                     doc.ref.set(defaultUSerSetup);
                     setUser(defaultUSerSetup);
@@ -67,6 +68,7 @@ function buildAnonUser() {
         uid: "0000000000",
         profileImage: `https://avatars.dicebear.com/api/identicon/${seed}.svg`,
         role: UserRoles.ANON,
+        email: "anon@anon.anon"
     };
     return anonUser;
 }
