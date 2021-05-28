@@ -14,12 +14,14 @@ const AuthButton = () => {
 function SignInButton() {
     const handleSendLink = async (email: string) => {
         const userRef = await firestore.collection('users').where('email' , '==', email).get();
+        const baseUrl = 'https://posh-center.vercel.app'
+
 
         if(userRef.empty){
             var actionCodeSettings = {
                 // URL you want to redirect back to. The domain (www.example.com) for this
                 // URL must be in the authorized domains list in the Firebase Console.
-                url: "https://hsnet.nz/completeEmailSignIn?user=false",
+                url: `${baseUrl}/completeEmailSignIn?user=false`,
                 // This must be true.
                 handleCodeInApp: true
             };
@@ -28,7 +30,7 @@ function SignInButton() {
             var actionCodeSettings = {
                 // URL you want to redirect back to. The domain (www.example.com) for this
                 // URL must be in the authorized domains list in the Firebase Console.
-                url: "http://localhost:3000/completeEmailSignIn?user=true",
+                url: `${baseUrl}/completeEmailSignIn?user=true`,
                 // This must be true.
                 handleCodeInApp: true
             };
@@ -43,11 +45,13 @@ function SignInButton() {
     return (
         <>
             <Button
-                variant="contained"
+            variant="outlined" color="primary"
                 className="btn-google"
                 onClick={signInWithGoogle}>
                 Sign In With Google
             </Button>
+            <br/>
+            <br/>
             <EmailLinkSignIn handleSendLink={handleSendLink} />
         </>
     );

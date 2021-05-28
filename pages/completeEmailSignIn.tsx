@@ -24,7 +24,7 @@ const completeEmailSignIn = () => {
                 await auth.signInWithEmailLink(email, currentURL);
                 router.push('/profile');
             } catch (error) {
-                setErrorMessage(`Error signing in, try again...`);
+                setErrorMessage(`Error signing in, try again...${error.message}`);
             }
         } else {
             try {
@@ -54,7 +54,7 @@ const completeEmailSignIn = () => {
 
                 router.push('/profile');
             } catch (error) {
-                setErrorMessage(`Error signing in, try again...`);
+                setErrorMessage(`Error signing in, try again...${error.message}`);
             }
         }
     };
